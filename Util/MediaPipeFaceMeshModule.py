@@ -16,11 +16,11 @@ class MediaPipeFaceMesh:
 
         self.globalColor = (0, 255, 0)
 
-        mpDraw = mp.solutions.drawing_utils
-        mpFaceMesh = mp.solutions.face_mesh
-        faceMesh = mpFaceMesh.FaceMesh(self.staticMode, self.maxFaces, self.refineLandmarks, self.minDetectionCon,
-                                       self.minTrackingCon)
-        drawSpec = mpDraw.DrawingSpec(thickness=1, circle_radius=1, color=self.globalColor)
+        self.mpDraw = mp.solutions.drawing_utils
+        self.mpFaceMesh = mp.solutions.face_mesh
+        self.faceMesh = self.mpFaceMesh.FaceMesh(self.staticMode, self.maxFaces, self.refineLandmarks,
+                                                 self.minDetectionCon, self.minTrackingCon)
+        self.drawSpec = self.mpDraw.DrawingSpec(thickness=1, circle_radius=1, color=self.globalColor)
 
 
 def main():
