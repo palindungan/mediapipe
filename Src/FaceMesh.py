@@ -32,6 +32,7 @@ drawSpec = mpDraw.DrawingSpec(thickness=1, circle_radius=1, color=globalColor)
 
 face_oval = mpFaceMesh.FACEMESH_FACE_OVAL
 df = pd.DataFrame(list(face_oval), columns = ["p1", "p2"])
+print(df)
 
 while True:
     success, img = cap.read()
@@ -57,7 +58,7 @@ while True:
             for idx, lm in enumerate(faceLms.landmark):
                 ih, iw, ic = img.shape
                 x, y = int(lm.x * iw), int(lm.y * ih)
-                print("face: " + str(faceId) + ", id:" + str(idx), ", x:" + str(x), ", y:" + str(y))
+                # print("face: " + str(faceId) + ", id:" + str(idx), ", x:" + str(x), ", y:" + str(y))
 
     fps = basicTools.countFps(time=time.time())
     cv2.putText(imgOri, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, globalColor, 3)
