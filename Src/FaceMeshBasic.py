@@ -15,6 +15,10 @@ globalColor = (255, 0, 0)  # default color
 
 cap = cv2.VideoCapture(basicTools.getBaseUrl() + "/Resource/Videos/2.mp4")
 
+mpDraw = mp.solutions.drawing_utils
+mpFaceMesh = mp.solutions.face_mesh
+faceMesh = mpFaceMesh.FaceMesh()
+
 while True:
     success, img = cap.read()
 
