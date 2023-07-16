@@ -27,8 +27,9 @@ class MediaPipeFaceMesh():
         results = self.faceMesh.process(imgRGB)
         if results.multi_face_landmarks:
             for faceId, faceLms in enumerate(results.multi_face_landmarks):
-                self.mpDraw.draw_landmarks(img, faceLms, self.mpFaceMesh.FACEMESH_CONTOURS, self.drawSpec,
-                                           self.drawSpec)
+                if draw:
+                    self.mpDraw.draw_landmarks(img, faceLms, self.mpFaceMesh.FACEMESH_CONTOURS, self.drawSpec,
+                                               self.drawSpec)
         return img
 
 
