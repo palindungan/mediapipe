@@ -17,11 +17,11 @@ cameraBrightness = 190  # Set Brightness
 globalColor = (255, 0, 0)  # default color
 # End of Setting
 
-# cap = cv2.VideoCapture(basicTools.getBaseUrl() + "/Resource/Videos/2.mp4")
-cap = cv2.VideoCapture(noCam)
-cap.set(3, wCam)
-cap.set(4, hCam)
-cap.set(10, cameraBrightness)
+cap = cv2.VideoCapture(basicTools.getBaseUrl() + "/Resource/Videos/2.mp4")
+# cap = cv2.VideoCapture(noCam)
+# cap.set(3, wCam)
+# cap.set(4, hCam)
+# cap.set(10, cameraBrightness)
 
 mpDraw = mp.solutions.drawing_utils
 mpFaceMesh = mp.solutions.face_mesh
@@ -33,16 +33,9 @@ while True:
     # detect FaceMesh
     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     results = faceMesh.process(imgRGB)
-    # if results.multi_face_landmarks:
-    #     for faceLms in results.multi_face_landmarks:
-    #         mpDraw.draw_landmarks(img, faceLms, mpFaceMesh.FACEMESH_CONTOURS)
     if results.multi_face_landmarks:
-        for face_landmarks in results.multi_face_landmarks:
-            # Draw the face mesh
-            for idx, landmark in enumerate(face_landmarks.landmark):
-                # Draw a circle for each face landmark point
-                x, y = int(landmark.x * img.shape[1]), int(landmark.y * img.shape[0])
-                cv2.circle(img, (x, y), radius=1, color=(0, 255, 0), thickness=-1)
+        for faceLms in results.multi_face_landmarks:
+            mpDraw.draw_landmarks(img, faceLms, mpFaceMesh.FACEMESH_CONTOURS)
 
     fps = basicTools.countFps(time=time.time())
     cv2.putText(img, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, globalColor, 3)
