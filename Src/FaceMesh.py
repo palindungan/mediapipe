@@ -27,9 +27,11 @@ cap = cv2.VideoCapture(basicTools.getBaseUrl() + "/Resource/Videos/3.mp4")
 mpDraw = mp.solutions.drawing_utils
 mpFaceMesh = mp.solutions.face_mesh
 faceMesh = mpFaceMesh.FaceMesh(max_num_faces=2)
-face_oval = mpFaceMesh.FACEMESH_FACE_OVAL
 
 drawSpec = mpDraw.DrawingSpec(thickness=1, circle_radius=1, color=globalColor)
+
+face_oval = mpFaceMesh.FACEMESH_FACE_OVAL
+df = pd.DataFrame(list(face_oval), columns = ["p1", "p2"])
 
 while True:
     success, img = cap.read()
