@@ -17,10 +17,14 @@ cap = cv2.VideoCapture(basicTools.getBaseUrl() + "/Resource/Videos/2.mp4")
 
 mpDraw = mp.solutions.drawing_utils
 mpFaceMesh = mp.solutions.face_mesh
-faceMesh = mpFaceMesh.FaceMesh()
+faceMesh = mpFaceMesh.FaceMesh(max_num_faces=2)
 
 while True:
     success, img = cap.read()
+
+    # detect FaceMesh
+    imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    result = faceMesh.process(imgRGB)
 
     fps = basicTools.countFps(time=time.time())
     cv2.putText(img, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, globalColor, 3)
