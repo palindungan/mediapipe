@@ -33,6 +33,8 @@ def getFaceOval():
     for route_idx in routes_idx:
         print(f"Draw a line between {route_idx[0]}th landmark point to {route_idx[1]}th landmark point")
 
+    return routes_idx
+
 
 # Start of Declare Object Class
 basicTools = BasicToolModule.BasicTools()
@@ -59,7 +61,7 @@ faceMesh = mpFaceMesh.FaceMesh(max_num_faces=2)
 
 drawSpec = mpDraw.DrawingSpec(thickness=1, circle_radius=1, color=globalColor)
 
-getFaceOval()
+routes_id = getFaceOval()
 
 while True:
     success, img = cap.read()
