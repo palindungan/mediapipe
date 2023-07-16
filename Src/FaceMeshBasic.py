@@ -49,10 +49,10 @@ while True:
             #     cv2.circle(imgContours, (x, y), radius=1, color=(0, 255, 0), thickness=-1)
 
             # print landmark
-            for id, lm in enumerate(faceLms.landmark):
+            for idx, lm in enumerate(faceLms.landmark):
                 ih, iw, ic = img.shape
                 x, y = int(lm.x * iw), int(lm.y * ih)
-                print("face: " + str(faceId) + ", id:" + str(id), ", x:" + str(x), ", y:" + str(y))
+                print("face: " + str(faceId) + ", id:" + str(idx), ", x:" + str(x), ", y:" + str(y))
 
     fps = basicTools.countFps(time=time.time())
     cv2.putText(imgOri, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, globalColor, 3)
