@@ -30,18 +30,22 @@ faceMesh = mpFaceMesh.FaceMesh(max_num_faces=2)
 while True:
     success, img = cap.read()
 
+    imgOri = img.copy()
+    imgBlank = basicTools.CreateBlankImage(img)
+
     # detect FaceMesh
     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     results = faceMesh.process(imgRGB)
     if results.multi_face_landmarks:
         for faceLms in results.multi_face_landmarks:
             mpDraw.draw_landmarks(img, faceLms, mpFaceMesh.FACEMESH_CONTOURS)
+            mpDraw.draw_landmarks(imgBlank, faceLms, mpFaceMesh.FACEMESH_CONTOURS)
 
     fps = basicTools.countFps(time=time.time())
     cv2.putText(img, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, globalColor, 3)
 
     # show result in stacked images
-    stackedImages = imageProcessing.stackImages(1, ([img, basicTools.CreateBlankImage(img)], [basicTools.CreateBlankImage(img), basicTools.CreateBlankImage(img)]))
+    stackedImages = imageProcessing.stackImages(1, ([imgOri, img], [imgBlank, basicTools.CreateBlankImage(img)]))
     cv2.imshow("Stacked Image", stackedImages)
 
     # action for end proses
