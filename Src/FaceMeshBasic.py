@@ -26,7 +26,7 @@ cap.set(10, cameraBrightness)
 mpDraw = mp.solutions.drawing_utils
 mpFaceMesh = mp.solutions.face_mesh
 faceMesh = mpFaceMesh.FaceMesh(max_num_faces=2)
-drawSpec = mpDraw.DrawingSpec(thickness=1, circle_radius=2)
+drawSpec = mpDraw.DrawingSpec(thickness=1, circle_radius=2, color=globalColor)
 
 while True:
     success, img = cap.read()
