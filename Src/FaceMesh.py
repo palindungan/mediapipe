@@ -1,5 +1,6 @@
 import cv2
 import mediapipe as mp
+import numpy as np
 from Util import BasicToolModule
 
 def draw_outer_face_edges(image_path):
@@ -32,8 +33,13 @@ def draw_outer_face_edges(image_path):
                 x, y = int(landmark.x * image.shape[1]), int(landmark.y * image.shape[0])
                 face_edges.append((x, y))
 
-                # Gambar titik-titik tepi wajah pada gambar
-                cv2.circle(image, (x, y), 1, (0, 255, 0), -1)
+    # Gambar poligon wajah terluar
+    mask = np.zeros_like(image)
+    points = np.array(face_edges, np.int32)
+    cv2.fillPoly(mask, [points], (255, 255, 255))
+
+    # Gambar hitam di luar poligon wajah terluar
+    image[~mask.any(axis=2)] = 0
 
     return image
 
@@ -44,7 +50,7 @@ if __name__ == "__main__":
 
     result_image = draw_outer_face_edges(image_path)
 
-    # Tampilkan gambar dengan titik-titik tepi wajah terluar
+    # Tampilkan gambar dengan titik-titik tepi wajah terluar dan latar belakang hitam
     cv2.imshow("Outer Face Edges", result_image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
