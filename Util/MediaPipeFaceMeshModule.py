@@ -38,7 +38,7 @@ class MediaPipeFaceMesh():
                     ih, iw, ic = img.shape
                     x, y = int(lm.x * iw), int(lm.y * ih)
                     # print("face: " + str(faceId) + ", id:" + str(idx), ", x:" + str(x), ", y:" + str(y))
-                    cv2.putText(img, f'FPS {int(idx)}', (x, y), cv2.FONT_HERSHEY_PLAIN, 0.5, self.globalColor, 1)
+                    # cv2.putText(img, f'FPS {int(idx)}', (x, y), cv2.FONT_HERSHEY_PLAIN, 0.5, self.globalColor, 1)
                     face.append([x, y])
                 faces.append(face)
 
@@ -52,7 +52,7 @@ def main():
     mpFaceMesh = MediaPipeFaceMesh(maxFaces=2)
     # End of Declare Object Class
 
-    wCam, hCam = 480, 360  # width and height image
+    wCam, hCam = 1280, 720  # width and height image
     noCam = 1  # default Cam
     cameraBrightness = 190  # Set Brightness
     globalColor = (0, 255, 0)  # default color
@@ -66,7 +66,7 @@ def main():
         success, img = cap.read()
 
         imgOri = img.copy()
-        img, faces = mpFaceMesh.detection(img, False)
+        img, faces = mpFaceMesh.detection(img, True)
         if len(faces) != 0:
             print(len(faces))
             # print(len(faces[0]))
@@ -75,8 +75,8 @@ def main():
         cv2.putText(imgOri, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, globalColor, 3)
 
         # show result in stacked images
-        stackedImages = imageProcessing.stackImages(1, ([imgOri, img]))
-        cv2.imshow("Stacked Image", stackedImages)
+        # stackedImages = imageProcessing.stackImages(1, ([imgOri, img]))
+        cv2.imshow("Stacked Image", img)
 
         # action for end proses
         if cv2.waitKey(1) & 0xff == ord('q'):
