@@ -52,8 +52,15 @@ def main():
     mpFaceMesh = MediaPipeFaceMesh(maxFaces=2)
     # End of Declare Object Class
 
+    wCam, hCam = 480, 360  # width and height image
+    noCam = 1  # default Cam
+    cameraBrightness = 190  # Set Brightness
     globalColor = (0, 255, 0)  # default color
-    cap = cv2.VideoCapture(basicTools.getBaseUrl() + "/Resource/Videos/3.mp4")
+    # cap = cv2.VideoCapture(basicTools.getBaseUrl() + "/Resource/Videos/3.mp4")
+    cap = cv2.VideoCapture(noCam)
+    cap.set(3, wCam)
+    cap.set(4, hCam)
+    cap.set(10, cameraBrightness)
 
     while True:
         success, img = cap.read()
