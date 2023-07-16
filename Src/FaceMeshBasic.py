@@ -24,7 +24,10 @@ while True:
 
     # detect FaceMesh
     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    result = faceMesh.process(imgRGB)
+    results = faceMesh.process(imgRGB)
+    if results.multi_face_landmarks:
+        for faceLms in results.multi_face_landmarks:
+            mpDraw.draw_landmarks(img, faceLms, mpFaceMesh.FACEMESH_CONTOURS)
 
     fps = basicTools.countFps(time=time.time())
     cv2.putText(img, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, globalColor, 3)
