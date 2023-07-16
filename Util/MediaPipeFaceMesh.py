@@ -4,6 +4,7 @@ import time
 from Util import BasicToolModule
 from Util import ImageProcessingModule
 
+
 def main():
     # Start of Declare Object Class
     basicTools = BasicToolModule.BasicTools()
@@ -30,6 +31,7 @@ def main():
         # action for end proses
         if cv2.waitKey(1) & 0xff == ord('q'):
             break
+
 
 if __name__ == '__main__':
     main()
