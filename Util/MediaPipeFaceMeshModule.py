@@ -48,7 +48,7 @@ def main():
     # Start of Declare Object Class
     basicTools = BasicToolModule.BasicTools()
     imageProcessing = ImageProcessingModule.ImageProcessing()
-    mpFaceMesh = MediaPipeFaceMesh()
+    mpFaceMesh = MediaPipeFaceMesh(maxFaces=2)
     # End of Declare Object Class
 
     globalColor = (0, 255, 0)  # default color
@@ -59,6 +59,8 @@ def main():
 
         imgOri = img.copy()
         img, faces = mpFaceMesh.detection(img, True)
+        if len(faces) != 0:
+            print(len(faces))
 
         fps = basicTools.countFps(time=time.time())
         cv2.putText(imgOri, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, globalColor, 3)
