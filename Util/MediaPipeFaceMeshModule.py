@@ -39,7 +39,6 @@ def main():
     # End of Declare Object Class
 
     globalColor = (0, 255, 0)  # default color
-
     cap = cv2.VideoCapture(basicTools.getBaseUrl() + "/Resource/Videos/3.mp4")
 
     while True:
