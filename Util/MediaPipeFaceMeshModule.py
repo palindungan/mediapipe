@@ -5,9 +5,9 @@ from Util import BasicToolModule
 from Util import ImageProcessingModule
 
 
-class MediaPipeFaceMesh:
+class MediaPipeFaceMesh():
 
-    def __init(self, staticMode=False, maxFaces=1, refineLandmarks=False, minDetectionCon=0.5, minTrackingCon=0.5):
+    def __init__(self, staticMode=False, maxFaces=1, refineLandmarks=False, minDetectionCon=0.5, minTrackingCon=0.5):
         self.staticMode = staticMode
         self.maxFaces = maxFaces
         self.refineLandmarks = refineLandmarks
