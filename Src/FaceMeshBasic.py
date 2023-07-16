@@ -40,7 +40,9 @@ while True:
     fps = basicTools.countFps(time=time.time())
     cv2.putText(img, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, globalColor, 3)
 
-    cv2.imshow("Image", img)
+    # show result in stacked images
+    stackedImages = imageProcessing.stackImages(1, ([img, basicTools.CreateBlankImage(img)], [basicTools.CreateBlankImage(img), basicTools.CreateBlankImage(img)]))
+    cv2.imshow("Stacked Image", stackedImages)
 
     # action for end proses
     if cv2.waitKey(1) & 0xff == ord('q'):
