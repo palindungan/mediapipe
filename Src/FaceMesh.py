@@ -1,6 +1,7 @@
 import cv2
 import mediapipe as mp
 import time
+import pandas as pd
 from Util import BasicToolModule
 from Util import ImageProcessingModule
 
@@ -26,6 +27,8 @@ cap = cv2.VideoCapture(basicTools.getBaseUrl() + "/Resource/Videos/3.mp4")
 mpDraw = mp.solutions.drawing_utils
 mpFaceMesh = mp.solutions.face_mesh
 faceMesh = mpFaceMesh.FaceMesh(max_num_faces=2)
+face_oval = mpFaceMesh.FACEMESH_FACE_OVAL
+
 drawSpec = mpDraw.DrawingSpec(thickness=1, circle_radius=1, color=globalColor)
 
 while True:
