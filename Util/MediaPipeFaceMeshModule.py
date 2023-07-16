@@ -27,15 +27,16 @@ class MediaPipeFaceMesh:
         results = self.faceMesh.process(imgRGB)
         if results.multi_face_landmarks:
             for faceId, faceLms in enumerate(results.multi_face_landmarks):
-                if draw:
-                    self.mpDraw.draw_landmarks(img, faceLms, self.mpFaceMesh.FACEMESH_CONTOURS, self.drawSpec,
-                                               self.drawSpec)
+                self.mpDraw.draw_landmarks(img, faceLms, self.mpFaceMesh.FACEMESH_CONTOURS, self.drawSpec,
+                                           self.drawSpec)
+        return img
 
 
 def main():
     # Start of Declare Object Class
     basicTools = BasicToolModule.BasicTools()
     imageProcessing = ImageProcessingModule.ImageProcessing()
+    mpFaceMesh = MediaPipeFaceMesh()
     # End of Declare Object Class
 
     globalColor = (0, 255, 0)  # default color
@@ -45,13 +46,13 @@ def main():
         success, img = cap.read()
 
         imgOri = img.copy()
-        imgContours = basicTools.CreateBlankImage(img)
+        img = mpFaceMesh.detection(img, True)
 
         fps = basicTools.countFps(time=time.time())
         cv2.putText(imgOri, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, globalColor, 3)
 
         # show result in stacked images
-        stackedImages = imageProcessing.stackImages(1, ([imgOri, imgContours], [img, basicTools.CreateBlankImage(img)]))
+        stackedImages = imageProcessing.stackImages(1, ([imgOri, img]))
         cv2.imshow("Stacked Image", stackedImages)
 
         # action for end proses
