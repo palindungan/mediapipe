@@ -25,9 +25,16 @@ while True:
     # detect FaceMesh
     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     results = faceMesh.process(imgRGB)
+    # if results.multi_face_landmarks:
+    #     for faceLms in results.multi_face_landmarks:
+    #         mpDraw.draw_landmarks(img, faceLms, mpFaceMesh.FACEMESH_CONTOURS)
     if results.multi_face_landmarks:
-        for faceLms in results.multi_face_landmarks:
-            mpDraw.draw_landmarks(img, faceLms, mpFaceMesh.FACEMESH_CONTOURS)
+        for face_landmarks in results.multi_face_landmarks:
+            # Draw the face mesh
+            for idx, landmark in enumerate(face_landmarks.landmark):
+                # Draw a circle for each face landmark point
+                x, y = int(landmark.x * img.shape[1]), int(landmark.y * img.shape[0])
+                cv2.circle(img, (x, y), radius=1, color=(0, 255, 0), thickness=-1)
 
     fps = basicTools.countFps(time=time.time())
     cv2.putText(img, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, globalColor, 3)
