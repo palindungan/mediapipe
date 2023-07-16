@@ -22,6 +22,15 @@ class MediaPipeFaceMesh:
                                                  self.minDetectionCon, self.minTrackingCon)
         self.drawSpec = self.mpDraw.DrawingSpec(thickness=1, circle_radius=1, color=self.globalColor)
 
+    def detection(self, img, draw=True):
+        imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        results = self.faceMesh.process(imgRGB)
+        if results.multi_face_landmarks:
+            for faceId, faceLms in enumerate(results.multi_face_landmarks):
+                if draw:
+                    self.mpDraw.draw_landmarks(img, faceLms, self.mpFaceMesh.FACEMESH_CONTOURS, self.drawSpec,
+                                               self.drawSpec)
+
 
 def main():
     # Start of Declare Object Class
