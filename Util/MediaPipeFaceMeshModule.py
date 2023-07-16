@@ -66,17 +66,14 @@ def main():
         success, img = cap.read()
 
         imgOri = img.copy()
-        img, faces = mpFaceMesh.detection(img, True)
-        if len(faces) != 0:
-            print(len(faces))
-            # print(len(faces[0]))
+        imgContours = basicTools.CreateBlankImage(img)
 
         fps = basicTools.countFps(time=time.time())
         cv2.putText(imgOri, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, globalColor, 3)
 
         # show result in stacked images
-        # stackedImages = imageProcessing.stackImages(1, ([imgOri, img]))
-        cv2.imshow("Stacked Image", img)
+        stackedImages = imageProcessing.stackImages(1, ([imgOri, imgContours], [img, basicTools.CreateBlankImage(img)]))
+        cv2.imshow("Stacked Image", stackedImages)
 
         # action for end proses
         if cv2.waitKey(1) & 0xff == ord('q'):
