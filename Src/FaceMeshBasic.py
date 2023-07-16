@@ -30,4 +30,7 @@ while True:
     cv2.putText(img, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, globalColor, 3)
 
     cv2.imshow("Image", img)
-    cv2.waitKey(1)
+
+    # action for end proses
+    if cv2.waitKey(1) & 0xff == ord('q'):
+        break
