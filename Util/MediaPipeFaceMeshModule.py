@@ -25,12 +25,23 @@ class MediaPipeFaceMesh():
     def detection(self, img, draw=True):
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         results = self.faceMesh.process(imgRGB)
+        faces = []
+
         if results.multi_face_landmarks:
             for faceId, faceLms in enumerate(results.multi_face_landmarks):
                 if draw:
                     self.mpDraw.draw_landmarks(img, faceLms, self.mpFaceMesh.FACEMESH_CONTOURS, self.drawSpec,
                                                self.drawSpec)
-        return img
+                # print landmark
+                face = []
+                for idx, lm in enumerate(faceLms.landmark):
+                    ih, iw, ic = img.shape
+                    x, y = int(lm.x * iw), int(lm.y * ih)
+                    # print("face: " + str(faceId) + ", id:" + str(idx), ", x:" + str(x), ", y:" + str(y))
+                    face.append([x, y])
+                faces.append(face)
+
+        return img, faces
 
 
 def main():
@@ -47,7 +58,7 @@ def main():
         success, img = cap.read()
 
         imgOri = img.copy()
-        img = mpFaceMesh.detection(img, True)
+        img, faces = mpFaceMesh.detection(img, True)
 
         fps = basicTools.countFps(time=time.time())
         cv2.putText(imgOri, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, globalColor, 3)
