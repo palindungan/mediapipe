@@ -5,6 +5,15 @@ from Util import BasicToolModule
 from Util import ImageProcessingModule
 
 
+class MediaPipeFaceMesh:
+
+    def __init(self, staticMode=False, maxFaces=1, minDetectionCon=0.5, minTrackingCon=0.5):
+        self.staticMode = staticMode
+        self.maxFaces = maxFaces
+        self.minDetectionCon = minDetectionCon
+        self.minTrackingCon = minTrackingCon
+
+
 def main():
     # Start of Declare Object Class
     basicTools = BasicToolModule.BasicTools()
