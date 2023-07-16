@@ -38,14 +38,14 @@ while True:
     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     results = faceMesh.process(imgRGB)
     if results.multi_face_landmarks:
-        for faceLms in results.multi_face_landmarks:
+        for faceId, faceLms in enumerate(results.multi_face_landmarks):
             mpDraw.draw_landmarks(img, faceLms, mpFaceMesh.FACEMESH_CONTOURS, drawSpec, drawSpec)
             mpDraw.draw_landmarks(imgContours, faceLms, mpFaceMesh.FACEMESH_CONTOURS, drawSpec, drawSpec)
 
             for id, lm in enumerate(faceLms.landmark):
                 ih, iw, ic = img.shape
                 x, y = int(lm.x * iw), int(lm.y * ih)
-                print("id:" + str(id), ", x:" + str(x), ", y:" + str(y))
+                print("face: " + str(faceId) + ", id:" + str(id), ", x:" + str(x), ", y:" + str(y))
 
     fps = basicTools.countFps(time=time.time())
     cv2.putText(img, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, globalColor, 3)
