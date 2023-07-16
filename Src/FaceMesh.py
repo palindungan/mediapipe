@@ -10,6 +10,7 @@ def getFaceOval():
     face_oval = mpFaceMesh.FACEMESH_FACE_OVAL
     df = pd.DataFrame(list(face_oval), columns=["p1", "p2"])
     print(df)
+
     routes_idx = []
 
     p1 = df.iloc[0]["p1"]
