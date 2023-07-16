@@ -5,6 +5,34 @@ import pandas as pd
 from Util import BasicToolModule
 from Util import ImageProcessingModule
 
+
+def getFaceOval():
+    face_oval = mpFaceMesh.FACEMESH_FACE_OVAL
+    df = pd.DataFrame(list(face_oval), columns=["p1", "p2"])
+    print(df)
+    routes_idx = []
+
+    p1 = df.iloc[0]["p1"]
+    p2 = df.iloc[0]["p2"]
+
+    for i in range(0, df.shape[0]):
+        # print(p1, p2)
+
+        obj = df[df["p1"] == p2]
+        p1 = obj["p1"].values[0]
+        p2 = obj["p2"].values[0]
+
+        route_idx = []
+        route_idx.append(p1)
+        route_idx.append(p2)
+        routes_idx.append(route_idx)
+
+    # -------------------------------
+
+    for route_idx in routes_idx:
+        print(f"Draw a line between {route_idx[0]}th landmark point to {route_idx[1]}th landmark point")
+
+
 # Start of Declare Object Class
 basicTools = BasicToolModule.BasicTools()
 imageProcessing = ImageProcessingModule.ImageProcessing()
@@ -30,9 +58,7 @@ faceMesh = mpFaceMesh.FaceMesh(max_num_faces=2)
 
 drawSpec = mpDraw.DrawingSpec(thickness=1, circle_radius=1, color=globalColor)
 
-face_oval = mpFaceMesh.FACEMESH_FACE_OVAL
-df = pd.DataFrame(list(face_oval), columns = ["p1", "p2"])
-print(df)
+getFaceOval()
 
 while True:
     success, img = cap.read()
