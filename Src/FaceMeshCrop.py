@@ -42,11 +42,6 @@ while True:
             # Draw the face mesh default
             mpDraw.draw_landmarks(img, faceLms, mpFaceMesh.FACEMESH_CONTOURS, drawSpec, drawSpec)
             mpDraw.draw_landmarks(imgContours, faceLms, mpFaceMesh.FACEMESH_CONTOURS, drawSpec, drawSpec)
-            # Draw the face mesh manual
-            # for idx, landmark in enumerate(faceLms.landmark):
-            #     x, y = int(landmark.x * img.shape[1]), int(landmark.y * img.shape[0])
-            #     cv2.circle(img, (x, y), radius=1, color=(0, 255, 0), thickness=-1)
-            #     cv2.circle(imgContours, (x, y), radius=1, color=(0, 255, 0), thickness=-1)
 
             # print landmark
             for idx, lm in enumerate(faceLms.landmark):
