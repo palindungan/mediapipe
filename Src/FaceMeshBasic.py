@@ -42,6 +42,11 @@ while True:
             mpDraw.draw_landmarks(img, faceLms, mpFaceMesh.FACEMESH_CONTOURS, drawSpec, drawSpec)
             mpDraw.draw_landmarks(imgContours, faceLms, mpFaceMesh.FACEMESH_CONTOURS, drawSpec, drawSpec)
 
+            for id, lm in faceLms:
+                ih, iw, ic = img.shape
+                x, y = int(lm.x * iw), int(lm.y * ih)
+                print("id : " + id, "x : " + x, "y : " + y)
+
     fps = basicTools.countFps(time=time.time())
     cv2.putText(img, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, globalColor, 3)
 
