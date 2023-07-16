@@ -13,6 +13,11 @@ class MediaPipeFaceMesh:
         self.minDetectionCon = minDetectionCon
         self.minTrackingCon = minTrackingCon
 
+        mpDraw = mp.solutions.drawing_utils
+        mpFaceMesh = mp.solutions.face_mesh
+        faceMesh = mpFaceMesh.FaceMesh(max_num_faces=2)
+        drawSpec = mpDraw.DrawingSpec(thickness=1, circle_radius=1, color=globalColor)
+
 
 def main():
     # Start of Declare Object Class
