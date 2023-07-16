@@ -7,16 +7,20 @@ from Util import ImageProcessingModule
 
 class MediaPipeFaceMesh:
 
-    def __init(self, staticMode=False, maxFaces=1, minDetectionCon=0.5, minTrackingCon=0.5):
+    def __init(self, staticMode=False, maxFaces=1, refineLandmarks=False, minDetectionCon=0.5, minTrackingCon=0.5):
         self.staticMode = staticMode
         self.maxFaces = maxFaces
+        self.refineLandmarks = refineLandmarks
         self.minDetectionCon = minDetectionCon
         self.minTrackingCon = minTrackingCon
 
+        self.globalColor = (0, 255, 0)
+
         mpDraw = mp.solutions.drawing_utils
         mpFaceMesh = mp.solutions.face_mesh
-        faceMesh = mpFaceMesh.FaceMesh(max_num_faces=2)
-        drawSpec = mpDraw.DrawingSpec(thickness=1, circle_radius=1, color=globalColor)
+        faceMesh = mpFaceMesh.FaceMesh(self.staticMode, self.maxFaces, self.refineLandmarks, self.minDetectionCon,
+                                       self.minTrackingCon)
+        drawSpec = mpDraw.DrawingSpec(thickness=1, circle_radius=1, color=self.globalColor)
 
 
 def main():
