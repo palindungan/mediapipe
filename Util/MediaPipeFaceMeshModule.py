@@ -38,6 +38,7 @@ class MediaPipeFaceMesh():
                     ih, iw, ic = img.shape
                     x, y = int(lm.x * iw), int(lm.y * ih)
                     # print("face: " + str(faceId) + ", id:" + str(idx), ", x:" + str(x), ", y:" + str(y))
+                    cv2.putText(img, f'FPS {int(idx)}', (x, y), cv2.FONT_HERSHEY_PLAIN, 0.5, self.globalColor, 1)
                     face.append([x, y])
                 faces.append(face)
 
@@ -58,9 +59,10 @@ def main():
         success, img = cap.read()
 
         imgOri = img.copy()
-        img, faces = mpFaceMesh.detection(img, True)
+        img, faces = mpFaceMesh.detection(img, False)
         if len(faces) != 0:
             print(len(faces))
+            # print(len(faces[0]))
 
         fps = basicTools.countFps(time=time.time())
         cv2.putText(imgOri, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, globalColor, 3)
