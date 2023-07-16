@@ -9,7 +9,7 @@ basicTools = BasicToolModule.BasicTools()
 imageProcessing = ImageProcessingModule.ImageProcessing()
 # End of Declare Object Class
 
-cap = cv2.VideoCapture(basicTools.getBaseUrl() + "Videos/2.mp4")
+cap = cv2.VideoCapture(basicTools.getBaseUrl() + "/Resource/Videos/2.mp4")
 
 while True:
     success, img = cap.read()
