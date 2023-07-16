@@ -17,11 +17,11 @@ cameraBrightness = 190  # Set Brightness
 globalColor = (255, 0, 0)  # default color
 # End of Setting
 
-cap = cv2.VideoCapture(basicTools.getBaseUrl() + "/Resource/Videos/2.mp4")
-# cap = cv2.VideoCapture(noCam)
-# cap.set(3, wCam)
-# cap.set(4, hCam)
-# cap.set(10, cameraBrightness)
+# cap = cv2.VideoCapture(basicTools.getBaseUrl() + "/Resource/Videos/2.mp4")
+cap = cv2.VideoCapture(noCam)
+cap.set(3, wCam)
+cap.set(4, hCam)
+cap.set(10, cameraBrightness)
 
 mpDraw = mp.solutions.drawing_utils
 mpFaceMesh = mp.solutions.face_mesh
