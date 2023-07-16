@@ -56,7 +56,7 @@ while True:
     cv2.putText(img, f'Saved : {int(countSave)}', (170, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, globalColor, 3)
 
     # show result in stacked images
-    stackedImages = imageProcessing.stackImages(1, ([img, basicTools.CreateBlankImage(img)], [imgRoi, basicTools.CreateBlankImage(img)]))
+    stackedImages = imageProcessing.stackImages(1, ([img, basicTools.CreateBlankImage(img)], [basicTools.CreateBlankImage(img), basicTools.CreateBlankImage(img)]))
     cv2.imshow("Stacked Image", stackedImages)
 
     if cv2.waitKey(1) & 0xff == ord('q'):
