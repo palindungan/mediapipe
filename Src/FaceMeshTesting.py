@@ -6,39 +6,39 @@ from Util import ImageProcessingModule
 from Util import MediapipeFaceMeshModule
 
 # Utility Class
-basicTools = BasicToolModule.BasicTool()
+basicTool = BasicToolModule.BasicTool()
 imageProcessing = ImageProcessingModule.ImageProcessing()
 mediapipeFaceMesh = MediapipeFaceMeshModule.MediapipeFaceMesh()
 
 # Camera Setting
-wCam, hCam = 480, 360  # width and height image
-noCam = 1  # default Cam
-cameraBrightness = 190  # set brightness
-globalColor = (0, 255, 0)  # default color
+w_cam, h_cam = 480, 360  # width and height image
+no_cam = 1  # default Cam
+camera_brightness = 190  # set brightness
+global_color = (0, 255, 0)  # default color
 
 # cap = cv2.VideoCapture(basicTools.getBaseUrl() + "/Resource/Videos/3.mp4")  # read file
 
 # Webcam Video
-cap = cv2.VideoCapture(noCam)  # webcam
-cap.set(3, wCam)  # width
-cap.set(4, hCam)  # height
-cap.set(10, cameraBrightness)  # brightness
+cap = cv2.VideoCapture(no_cam)  # webcam
+cap.set(3, w_cam)  # width
+cap.set(4, h_cam)  # height
+cap.set(10, camera_brightness)  # brightness
 
 while True:
     success, img = cap.read()
-    imgOri = img.copy()
+    img_ori = img.copy()
 
     # processing
-    multiFaceLandmarks = mediapipeFaceMesh.processing(img)
-    img = mediapipeFaceMesh.drawing_roi(img, multiFaceLandmarks)
+    multi_face_landmarks = mediapipeFaceMesh.processing(img)
+    img = mediapipeFaceMesh.drawing_roi(img, multi_face_landmarks)
 
     # show fps
-    fps = basicTools.countFps(time=time.time())
-    cv2.putText(imgOri, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, globalColor, 3)
+    fps = basicTool.countFps(time=time.time())
+    cv2.putText(img_ori, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, global_color, 3)
 
     # show images in stacked
-    stackedImages = imageProcessing.stackImages(1, ([imgOri, img]))
-    cv2.imshow("Stacked Image", stackedImages)
+    stacked_images = imageProcessing.stackImages(1, ([img_ori, img]))
+    cv2.imshow("Stacked Image", stacked_images)
 
     # action for end proses
     if cv2.waitKey(1) & 0xff == ord('q'):
