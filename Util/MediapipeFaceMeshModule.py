@@ -29,10 +29,16 @@ class MediapipeFaceMesh:
         if multiFaceLandmarks:
             for faceId, faceLandmarks in enumerate(multiFaceLandmarks):
                 # Draw the face mesh default
-                self.mpDrawingSpec.draw_landmarks(img, faceLandmarks, self.mpFaceMesh.FACEMESH_CONTOURS,
-                                                  self.drawingSpec, self.drawingSpec)
-                self.mpDrawingSpec.draw_landmarks(imgContour, faceLandmarks, self.mpFaceMesh.FACEMESH_CONTOURS,
-                                                  self.drawingSpec, self.drawingSpec)
+                self.mpDrawingSpec.draw_landmarks(img,
+                                                  faceLandmarks,
+                                                  self.mpFaceMesh.FACEMESH_CONTOURS,
+                                                  self.drawingSpec,
+                                                  self.drawingSpec)
+                self.mpDrawingSpec.draw_landmarks(imgContour,
+                                                  faceLandmarks,
+                                                  self.mpFaceMesh.FACEMESH_CONTOURS,
+                                                  self.drawingSpec,
+                                                  self.drawingSpec)
 
                 # print landmark
                 for idx, lm in enumerate(faceLandmarks.landmark):
