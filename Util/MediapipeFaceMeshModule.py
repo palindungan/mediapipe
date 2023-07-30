@@ -45,10 +45,10 @@ class MediapipeFaceMesh:
         edges_array = []
 
         if multi_face_landmarks:
-            for faceId, faceLandmarks in enumerate(multi_face_landmarks):
+            for face_idx, landmarks in enumerate(multi_face_landmarks):
                 array = []
-                for idx in edges_id:
-                    landmark = faceLandmarks.landmark[idx]
+                for edge_idx in edges_id:
+                    landmark = landmarks.landmark[edge_idx]
                     x, y = int(landmark.x * self.img_width), int(landmark.y * self.img_height)
                     array.append((x, y))
                 edges_array.append(array)
