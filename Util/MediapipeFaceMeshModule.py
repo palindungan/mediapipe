@@ -38,30 +38,30 @@ class MediapipeFaceMesh:
         return img
 
     def drawing_roi(self, img, multi_face_landmarks):
-        edges_id = [10, 338, 297, 332, 284, 251, 389, 356, 454, 323,
-                    361, 288, 397, 365, 379, 378, 400, 377, 152, 148,
-                    176, 149, 150, 136, 172, 58, 132, 93, 234, 127,
-                    162, 21, 54, 103, 67, 109, 10]
+        edges = [10, 338, 297, 332, 284, 251, 389, 356, 454, 323,
+                 361, 288, 397, 365, 379, 378, 400, 377, 152, 148,
+                 176, 149, 150, 136, 172, 58, 132, 93, 234, 127,
+                 162, 21, 54, 103, 67, 109, 10]
         edges_result = []
 
         if multi_face_landmarks:
             for face_idx, face_landmarks in enumerate(multi_face_landmarks):
                 array = []
-                for edge_idx in edges_id:
+                for edge_idx in edges:
                     landmark = face_landmarks.landmark[edge_idx]
                     x, y = int(landmark.x * self.img_width), int(landmark.y * self.img_height)
                     array.append((x, y))
                 edges_result.append(array)
 
         mask = np.zeros_like(img)
-        for edges in edges_result:
-            points = np.array(edges, np.int32)
+        for edge in edges_result:
+            points = np.array(edge, np.int32)
             cv2.fillPoly(mask, [points], (255, 255, 255))
 
         img[~mask.any(axis=2)] = 0
 
-        for edges in edges_result:
-            for x, y in edges:
+        for edge in edges_result:
+            for x, y in edge:
                 cv2.circle(img, (x, y), 1, (0, 255, 0), -1)
 
         return img
