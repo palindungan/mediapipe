@@ -13,19 +13,21 @@ imageProcessing = ImageProcessingModule.ImageProcessing()
 # Camera Setting
 wCam, hCam = 480, 360  # width and height image
 noCam = 1  # default Cam
-cameraBrightness = 190  # Set Brightness
+cameraBrightness = 190  # set brightness
 globalColor = (0, 255, 0)  # default color
 
-# Webcam Video Web Cam
-# cap = cv2.VideoCapture(basicTools.getBaseUrl() + "/Resource/Videos/3.mp4")
-cap = cv2.VideoCapture(noCam)
-cap.set(3, wCam)
-cap.set(4, hCam)
-cap.set(10, cameraBrightness)
+# cap = cv2.VideoCapture(basicTools.getBaseUrl() + "/Resource/Videos/3.mp4")  # read file
 
-mpDraw = mp.solutions.drawing_utils
+# Webcam Video
+cap = cv2.VideoCapture(noCam)  # webcam
+cap.set(3, wCam)  # width
+cap.set(4, hCam)  # height
+cap.set(10, cameraBrightness)  # brightness
+
+# mediapipe FaceMesh
 mpFaceMesh = mp.solutions.face_mesh
 faceMesh = mpFaceMesh.FaceMesh(max_num_faces=2)
+mpDraw = mp.solutions.drawing_utils
 drawSpec = mpDraw.DrawingSpec(thickness=1, circle_radius=1, color=globalColor)
 
 while True:
