@@ -27,15 +27,15 @@ class MediapipeFaceMesh:
 
         multiFaceLandmarks = results.multi_face_landmarks
         if multiFaceLandmarks:
-            for faceId, faceLms in enumerate(multiFaceLandmarks):
+            for faceId, faceLandmarks in enumerate(multiFaceLandmarks):
                 # Draw the face mesh default
-                self.mpDrawingSpec.draw_landmarks(img, faceLms, self.mpFaceMesh.FACEMESH_CONTOURS,
+                self.mpDrawingSpec.draw_landmarks(img, faceLandmarks, self.mpFaceMesh.FACEMESH_CONTOURS,
                                                   self.drawingSpec, self.drawingSpec)
-                self.mpDrawingSpec.draw_landmarks(imgContour, faceLms, self.mpFaceMesh.FACEMESH_CONTOURS,
+                self.mpDrawingSpec.draw_landmarks(imgContour, faceLandmarks, self.mpFaceMesh.FACEMESH_CONTOURS,
                                                   self.drawingSpec, self.drawingSpec)
 
                 # print landmark
-                for idx, lm in enumerate(faceLms.landmark):
+                for idx, lm in enumerate(faceLandmarks.landmark):
                     ih, iw, ic = img.shape
                     x, y = int(lm.x * iw), int(lm.y * ih)
                     print("face: " + str(faceId) + ", id:" + str(idx), ", x:" + str(x), ", y:" + str(y))
@@ -46,7 +46,7 @@ class MediapipeFaceMesh:
                                176, 149, 150, 136, 172, 58, 132, 93, 234, 127,
                                162, 21, 54, 103, 67, 109, 10]
                 for idx in outer_edges:
-                    landmark = faceLms.landmark[idx]
+                    landmark = faceLandmarks.landmark[idx]
                     x, y = int(landmark.x * img.shape[1]), int(landmark.y * img.shape[0])
                     face_edges.append((x, y))
                 face_edges_list.append(face_edges)
