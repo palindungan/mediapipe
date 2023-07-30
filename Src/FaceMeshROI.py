@@ -27,8 +27,8 @@ cap.set(10, cameraBrightness)  # brightness
 # mediapipe FaceMesh
 mpFaceMesh = mp.solutions.face_mesh
 faceMesh = mpFaceMesh.FaceMesh(max_num_faces=2)
-mpDraw = mp.solutions.drawing_utils
-drawSpec = mpDraw.DrawingSpec(thickness=1, circle_radius=1, color=globalColor)
+mpDrawingSpec = mp.solutions.drawing_utils
+drawingSpec = mpDrawingSpec.DrawingSpec(thickness=1, circle_radius=1, color=globalColor)
 
 while True:
     success, img = cap.read()
@@ -45,8 +45,8 @@ while True:
     if results.multi_face_landmarks:
         for faceId, faceLms in enumerate(results.multi_face_landmarks):
             # Draw the face mesh default
-            mpDraw.draw_landmarks(img, faceLms, mpFaceMesh.FACEMESH_CONTOURS, drawSpec, drawSpec)
-            mpDraw.draw_landmarks(imgContours, faceLms, mpFaceMesh.FACEMESH_CONTOURS, drawSpec, drawSpec)
+            mpDrawingSpec.draw_landmarks(img, faceLms, mpFaceMesh.FACEMESH_CONTOURS, drawingSpec, drawingSpec)
+            mpDrawingSpec.draw_landmarks(imgContours, faceLms, mpFaceMesh.FACEMESH_CONTOURS, drawingSpec, drawingSpec)
 
             # print landmark
             for idx, lm in enumerate(faceLms.landmark):
