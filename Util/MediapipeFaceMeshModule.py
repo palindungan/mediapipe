@@ -42,7 +42,7 @@ class MediapipeFaceMesh:
                  361, 288, 397, 365, 379, 378, 400, 377, 152, 148,
                  176, 149, 150, 136, 172, 58, 132, 93, 234, 127,
                  162, 21, 54, 103, 67, 109, 10]
-        coordinates = []
+        edge_multi_face_coordinates = []
 
         if multi_face_landmarks:
             for face_idx, face_landmarks in enumerate(multi_face_landmarks):
@@ -51,12 +51,12 @@ class MediapipeFaceMesh:
                     landmark = face_landmarks.landmark[edge_idx]
                     x, y = int(landmark.x * self.img_width), int(landmark.y * self.img_height)
                     coordinate.append((x, y))
-                coordinates.append(coordinate)
+                edge_multi_face_coordinates.append(coordinate)
 
         mask = np.zeros_like(img)
 
         # draw face mask (white)
-        for edge in coordinates:
+        for edge in edge_multi_face_coordinates:
             points = np.array(edge, np.int32)
             cv2.fillPoly(mask, [points], (255, 255, 255))
 
@@ -64,7 +64,7 @@ class MediapipeFaceMesh:
         img[~mask.any(axis=2)] = 0
 
         # draw outer face circle
-        for edge in coordinates:
+        for edge in edge_multi_face_coordinates:
             for x, y in edge:
                 cv2.circle(img, (x, y), 1, (0, 255, 0), -1)
 
