@@ -7,7 +7,11 @@ from Util import BasicToolModule
 
 class MediapipeFaceMesh:
     def __init__(self):
-        self.globalColor = (0, 255, 0)  # default color
+        self.globalColor = (0, 255, 0)
+        self.faceEdgesOuter = [10, 338, 297, 332, 284, 251, 389, 356, 454, 323,
+                               361, 288, 397, 365, 379, 378, 400, 377, 152, 148,
+                               176, 149, 150, 136, 172, 58, 132, 93, 234, 127,
+                               162, 21, 54, 103, 67, 109, 10]
 
         self.basicTools = BasicToolModule.BasicTool()
 
@@ -47,11 +51,8 @@ class MediapipeFaceMesh:
                 #     print("face: " + str(faceId) + ", id:" + str(idx), ", x:" + str(x), ", y:" + str(y))
 
                 face_edges = []
-                outer_edges = [10, 338, 297, 332, 284, 251, 389, 356, 454, 323,
-                               361, 288, 397, 365, 379, 378, 400, 377, 152, 148,
-                               176, 149, 150, 136, 172, 58, 132, 93, 234, 127,
-                               162, 21, 54, 103, 67, 109, 10]
-                for idx in outer_edges:
+
+                for idx in self.faceEdgesOuter:
                     landmark = faceLandmarks.landmark[idx]
                     x, y = int(landmark.x * img.shape[1]), int(landmark.y * img.shape[0])
                     face_edges.append((x, y))
