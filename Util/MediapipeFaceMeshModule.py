@@ -24,7 +24,7 @@ class MediapipeFaceMesh:
         imgContour = self.basicTools.CreateBlankImage(img)
         imgROI = img.copy()
 
-        face_edges_list = []
+        faceEdgesList = []
 
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         results = self.faceMesh.process(imgRGB)
@@ -56,17 +56,17 @@ class MediapipeFaceMesh:
                     landmark = faceLandmarks.landmark[idx]
                     x, y = int(landmark.x * img.shape[1]), int(landmark.y * img.shape[0])
                     faceEdgesArray.append((x, y))
-                face_edges_list.append(faceEdgesArray)
+                faceEdgesList.append(faceEdgesArray)
 
         mask = np.zeros_like(imgROI)
-        for face_edges in face_edges_list:
-            points = np.array(face_edges, np.int32)
+        for faceEdges in faceEdgesList:
+            points = np.array(faceEdges, np.int32)
             cv2.fillPoly(mask, [points], (255, 255, 255))
 
         imgROI[~mask.any(axis=2)] = 0
 
-        for face_edges in face_edges_list:
-            for x, y in face_edges:
+        for faceEdges in faceEdgesList:
+            for x, y in faceEdges:
                 cv2.circle(imgROI, (x, y), 1, (0, 255, 0), -1)
 
         return img, imgContour, imgROI
