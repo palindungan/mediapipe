@@ -53,7 +53,7 @@ class MediapipeFaceMesh:
 
                 for idx in self.faceEdgesId:
                     landmark = faceLandmarks.landmark[idx]
-                    x, y = int(landmark.x * img.shape[1]), int(landmark.y * img.shape[0])
+                    x, y = int(landmark.x * imgWidth), int(landmark.y * imgHeight)
                     faceEdgesArray.append((x, y))
                 faceEdgesList.append(faceEdgesArray)
 
