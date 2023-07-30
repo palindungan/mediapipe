@@ -6,16 +6,17 @@ import numpy as np
 from Util import BasicToolModule
 from Util import ImageProcessingModule
 
-# Start of Declare Object Class
+# Utility Class
 basicTools = BasicToolModule.BasicTools()
 imageProcessing = ImageProcessingModule.ImageProcessing()
 
-# Start of Setting
+# Camera Setting
 wCam, hCam = 480, 360  # width and height image
 noCam = 1  # default Cam
 cameraBrightness = 190  # Set Brightness
 globalColor = (0, 255, 0)  # default color
 
+# Webcam Video Web Cam
 # cap = cv2.VideoCapture(basicTools.getBaseUrl() + "/Resource/Videos/3.mp4")
 cap = cv2.VideoCapture(noCam)
 cap.set(3, wCam)
