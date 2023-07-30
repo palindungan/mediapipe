@@ -53,7 +53,7 @@ class MediapipeFaceMesh:
                     coordinate.append((x, y))
                 edge_multi_face_coordinates.append(coordinate)
 
-        # draw face mask (white == true)
+        # draw face mask (roi / true = white)
         mask = np.zeros_like(img)
         for edge in edge_multi_face_coordinates:
             points = np.array(edge, np.int32)
