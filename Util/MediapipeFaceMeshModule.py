@@ -12,7 +12,6 @@ class MediapipeFaceMesh:
                             361, 288, 397, 365, 379, 378, 400, 377, 152, 148,
                             176, 149, 150, 136, 172, 58, 132, 93, 234, 127,
                             162, 21, 54, 103, 67, 109, 10]
-        self.multiFaceLandmarks = []
 
         self.basicTools = BasicToolModule.BasicTool()
 
@@ -24,19 +23,17 @@ class MediapipeFaceMesh:
     def processing(self, img):
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         results = self.faceMesh.process(imgRGB)
-        self.multiFaceLandmarks = results.multi_face_landmarks
+        return results.multi_face_landmarks
 
-        return self.multiFaceLandmarks
-
-    def drawing(self, img):
+    def drawing(self, img, multiFaceLandmarks):
         imgContour = self.basicTools.CreateBlankImage(img)
         imgROI = img.copy()
         imgHeight, imgWidth, imgChannel = img.shape
 
         faceEdgesList = []
 
-        if self.multiFaceLandmarks:
-            for faceId, faceLandmarks in enumerate(self.multiFaceLandmarks):
+        if multiFaceLandmarks:
+            for faceId, faceLandmarks in enumerate(multiFaceLandmarks):
                 # Draw the face mesh default
                 self.mpDrawingSpec.draw_landmarks(img,
                                                   faceLandmarks,
