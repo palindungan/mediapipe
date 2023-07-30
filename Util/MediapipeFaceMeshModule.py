@@ -38,31 +38,31 @@ class MediapipeFaceMesh:
         return img
 
     def drawing_roi(self, img, multi_face_landmarks):
-        edges = [10, 338, 297, 332, 284, 251, 389, 356, 454, 323,
-                 361, 288, 397, 365, 379, 378, 400, 377, 152, 148,
-                 176, 149, 150, 136, 172, 58, 132, 93, 234, 127,
-                 162, 21, 54, 103, 67, 109, 10]
-        edge_multi_face_coordinates = []
+        outer_edges = [10, 338, 297, 332, 284, 251, 389, 356, 454, 323,
+                       361, 288, 397, 365, 379, 378, 400, 377, 152, 148,
+                       176, 149, 150, 136, 172, 58, 132, 93, 234, 127,
+                       162, 21, 54, 103, 67, 109, 10]
+        outer_edge_multi_face_coordinates = []
 
         if multi_face_landmarks:
             for face_idx, face_landmarks in enumerate(multi_face_landmarks):
                 coordinate = []
-                for edge_idx in edges:
+                for edge_idx in outer_edges:
                     landmark = face_landmarks.landmark[edge_idx]
                     x, y = int(landmark.x * self.img_width), int(landmark.y * self.img_height)
                     coordinate.append((x, y))
-                edge_multi_face_coordinates.append(coordinate)
+                outer_edge_multi_face_coordinates.append(coordinate)
 
         # draw face mask (roi / true = white)
         mask = np.zeros_like(img)
-        for edge in edge_multi_face_coordinates:
+        for edge in outer_edge_multi_face_coordinates:
             points = np.array(edge, np.int32)
             cv2.fillPoly(mask, [points], (255, 255, 255))
 
         img[~mask.any(axis=2)] = 0  # replace rgb 0 based on ~mask
 
         # draw outer face circle
-        for edge in edge_multi_face_coordinates:
+        for edge in outer_edge_multi_face_coordinates:
             for x, y in edge:
                 cv2.circle(img, (x, y), 1, (0, 255, 0), -1)
 
