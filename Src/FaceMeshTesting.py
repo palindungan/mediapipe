@@ -16,13 +16,13 @@ no_cam = 1  # default Cam
 camera_brightness = 190  # set brightness
 global_color = (0, 255, 0)  # default color
 
-cap = cv2.VideoCapture(basicTool.get_base_url() + "/Resource/Videos/3.mp4")  # read file
+# cap = cv2.VideoCapture(basicTool.get_base_url() + "/Resource/Videos/3.mp4")  # read file
 
-# # Webcam Video
-# cap = cv2.VideoCapture(no_cam)  # webcam
-# cap.set(3, w_cam)  # width
-# cap.set(4, h_cam)  # height
-# cap.set(10, camera_brightness)  # brightness
+# Webcam Video
+cap = cv2.VideoCapture(no_cam)  # webcam
+cap.set(3, w_cam)  # width
+cap.set(4, h_cam)  # height
+cap.set(10, camera_brightness)  # brightness
 
 while True:
     success, img = cap.read()
