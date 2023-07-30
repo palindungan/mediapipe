@@ -12,6 +12,7 @@ class MediapipeFaceMesh:
                             361, 288, 397, 365, 379, 378, 400, 377, 152, 148,
                             176, 149, 150, 136, 172, 58, 132, 93, 234, 127,
                             162, 21, 54, 103, 67, 109, 10]
+        self.imgHeight, self.imgWidth, self.imgChannel = 0, 0, 0
 
         self.basicTools = BasicToolModule.BasicTool()
 
@@ -22,6 +23,8 @@ class MediapipeFaceMesh:
         self.drawingSpec = self.mpDrawingSpec.DrawingSpec(thickness=1, circle_radius=1, color=self.globalColor)
 
     def processing(self, img):
+        self.imgHeight, self.imgWidth, self.imgChannel = img.shape
+
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         results = self.faceMesh.process(imgRGB)
         return results.multi_face_landmarks
@@ -29,7 +32,6 @@ class MediapipeFaceMesh:
     def drawing(self, img, multiFaceLandmarks):
         imgContour = self.basicTools.CreateBlankImage(img)
         imgROI = img.copy()
-        imgHeight, imgWidth, imgChannel = img.shape
 
         faceEdgesList = []
 
@@ -47,15 +49,15 @@ class MediapipeFaceMesh:
                                                   self.drawingSpec,
                                                   self.drawingSpec)
 
-                # # print landmark
-                # for idx, landmark in enumerate(faceLandmarks.landmark):
-                #     x, y = int(landmark.x * imgWidth), int(landmark.y * imgHeight)
-                #     print("face: " + str(faceId) + ", id:" + str(idx), ", x:" + str(x), ", y:" + str(y))
+                # print landmark
+                for idx, landmark in enumerate(faceLandmarks.landmark):
+                    x, y = int(landmark.x * self.imgWidth), int(landmark.y * self.imgHeight)
+                    print("face: " + str(faceId) + ", id:" + str(idx), ", x:" + str(x), ", y:" + str(y))
 
                 array = []
                 for idx in self.faceEdgesId:
                     landmark = faceLandmarks.landmark[idx]
-                    x, y = int(landmark.x * imgWidth), int(landmark.y * imgHeight)
+                    x, y = int(landmark.x * self.imgWidth), int(landmark.y * self.imgHeight)
                     array.append((x, y))
                 faceEdgesList.append(array)
 
