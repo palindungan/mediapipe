@@ -74,7 +74,7 @@ class MediapipeFaceMesh:
 
         return img, imgContour, imgROI
 
-    def drawingImg(self, img, multiFaceLandmarks):
+    def drawing_img(self, img, multiFaceLandmarks):
         if multiFaceLandmarks:
             for faceId, faceLandmarks in enumerate(multiFaceLandmarks):
                 # Draw the face mesh default
