@@ -73,3 +73,48 @@ class MediapipeFaceMesh:
                 cv2.circle(imgROI, (x, y), 1, (0, 255, 0), -1)
 
         return img, imgContour, imgROI
+
+    def drawingImg(self, img, multiFaceLandmarks):
+        imgContour = self.basicTools.CreateBlankImage(img)
+        imgROI = img.copy()
+
+        faceEdgesList = []
+
+        if multiFaceLandmarks:
+            for faceId, faceLandmarks in enumerate(multiFaceLandmarks):
+                # Draw the face mesh default
+                self.mpDrawingSpec.draw_landmarks(img,
+                                                  faceLandmarks,
+                                                  self.mpFaceMesh.FACEMESH_CONTOURS,
+                                                  self.drawingSpec,
+                                                  self.drawingSpec)
+                self.mpDrawingSpec.draw_landmarks(imgContour,
+                                                  faceLandmarks,
+                                                  self.mpFaceMesh.FACEMESH_CONTOURS,
+                                                  self.drawingSpec,
+                                                  self.drawingSpec)
+
+                # print landmark
+                for idx, landmark in enumerate(faceLandmarks.landmark):
+                    x, y = int(landmark.x * self.imgWidth), int(landmark.y * self.imgHeight)
+                    print("face: " + str(faceId) + ", id:" + str(idx), ", x:" + str(x), ", y:" + str(y))
+
+                array = []
+                for idx in self.faceEdgesId:
+                    landmark = faceLandmarks.landmark[idx]
+                    x, y = int(landmark.x * self.imgWidth), int(landmark.y * self.imgHeight)
+                    array.append((x, y))
+                faceEdgesList.append(array)
+
+        mask = np.zeros_like(imgROI)
+        for edges in faceEdgesList:
+            points = np.array(edges, np.int32)
+            cv2.fillPoly(mask, [points], (255, 255, 255))
+
+        imgROI[~mask.any(axis=2)] = 0
+
+        for edges in faceEdgesList:
+            for x, y in edges:
+                cv2.circle(imgROI, (x, y), 1, (0, 255, 0), -1)
+
+        return img, imgContour, imgROI
