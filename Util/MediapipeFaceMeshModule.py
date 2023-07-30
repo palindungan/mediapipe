@@ -30,10 +30,10 @@ class MediapipeFaceMesh:
                                                   self.drawingSpec,
                                                   self.drawingSpec)
 
-                # print landmark
-                for idx, landmark in enumerate(face_landmarks.landmark):
-                    x, y = int(landmark.x * self.img_width), int(landmark.y * self.img_height)
-                    print("face: " + str(face_idx) + ", id:" + str(idx), ", x:" + str(x), ", y:" + str(y))
+                # # print landmark
+                # for idx, landmark in enumerate(face_landmarks.landmark):
+                #     x, y = int(landmark.x * self.img_width), int(landmark.y * self.img_height)
+                #     print("face: " + str(face_idx) + ", id:" + str(idx), ", x:" + str(x), ", y:" + str(y))
 
         return img
 
