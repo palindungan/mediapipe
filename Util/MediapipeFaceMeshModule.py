@@ -55,13 +55,15 @@ class MediapipeFaceMesh:
 
         mask = np.zeros_like(img)
 
-        # Draw the outer face polygon on all faces
+        # Draw face mask (white)
         for edge in coordinates:
             points = np.array(edge, np.int32)
             cv2.fillPoly(mask, [points], (255, 255, 255))
 
+        # crop img based on mask
         img[~mask.any(axis=2)] = 0
 
+        # draw the outer face circle
         for edge in coordinates:
             for x, y in edge:
                 cv2.circle(img, (x, y), 1, (0, 255, 0), -1)
