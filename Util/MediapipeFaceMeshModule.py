@@ -24,8 +24,10 @@ class MediapipeFaceMesh:
 
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         results = self.faceMesh.process(imgRGB)
-        if results.multi_face_landmarks:
-            for faceId, faceLms in enumerate(results.multi_face_landmarks):
+
+        multiFaceLandmarks = results.multi_face_landmarks
+        if multiFaceLandmarks:
+            for faceId, faceLms in enumerate(multiFaceLandmarks):
                 # Draw the face mesh default
                 self.mpDrawingSpec.draw_landmarks(img, faceLms, self.mpFaceMesh.FACEMESH_CONTOURS,
                                                   self.drawingSpec, self.drawingSpec)
