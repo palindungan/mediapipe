@@ -59,14 +59,14 @@ class MediapipeFaceMesh:
                 faceEdgesList.append(faceEdgesArray)
 
         mask = np.zeros_like(imgROI)
-        for faceEdges in faceEdgesList:
-            points = np.array(faceEdges, np.int32)
+        for edges in faceEdgesList:
+            points = np.array(edges, np.int32)
             cv2.fillPoly(mask, [points], (255, 255, 255))
 
         imgROI[~mask.any(axis=2)] = 0
 
-        for faceEdges in faceEdgesList:
-            for x, y in faceEdges:
+        for edges in faceEdgesList:
+            for x, y in edges:
                 cv2.circle(imgROI, (x, y), 1, (0, 255, 0), -1)
 
         return img, imgContour, imgROI
