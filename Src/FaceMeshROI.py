@@ -34,7 +34,7 @@ while True:
     success, img = cap.read()
 
     imgOri = img.copy()
-    imgContours = basicTools.CreateBlankImage(img)
+    imgContour = basicTools.CreateBlankImage(img)
     imgROI = img.copy()
 
     # detect FaceMesh
@@ -46,7 +46,7 @@ while True:
         for faceId, faceLms in enumerate(results.multi_face_landmarks):
             # Draw the face mesh default
             mpDrawingSpec.draw_landmarks(img, faceLms, mpFaceMesh.FACEMESH_CONTOURS, drawingSpec, drawingSpec)
-            mpDrawingSpec.draw_landmarks(imgContours, faceLms, mpFaceMesh.FACEMESH_CONTOURS, drawingSpec, drawingSpec)
+            mpDrawingSpec.draw_landmarks(imgContour, faceLms, mpFaceMesh.FACEMESH_CONTOURS, drawingSpec, drawingSpec)
 
             # print landmark
             for idx, lm in enumerate(faceLms.landmark):
@@ -84,7 +84,7 @@ while True:
     cv2.putText(imgOri, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, globalColor, 3)
 
     # show images in stacked
-    stackedImages = imageProcessing.stackImages(1, ([imgOri, imgContours], [img, imgROI]))
+    stackedImages = imageProcessing.stackImages(1, ([imgOri, imgContour], [img, imgROI]))
     cv2.imshow("Stacked Image", stackedImages)
 
     # action for end proses
