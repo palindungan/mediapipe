@@ -40,11 +40,11 @@ class MediapipeFaceMesh:
                                                   self.drawingSpec,
                                                   self.drawingSpec)
 
-                # print landmark
-                for idx, lm in enumerate(faceLandmarks.landmark):
-                    ih, iw, ic = img.shape
-                    x, y = int(lm.x * iw), int(lm.y * ih)
-                    print("face: " + str(faceId) + ", id:" + str(idx), ", x:" + str(x), ", y:" + str(y))
+                # # print landmark
+                # for idx, lm in enumerate(faceLandmarks.landmark):
+                #     ih, iw, ic = img.shape
+                #     x, y = int(lm.x * iw), int(lm.y * ih)
+                #     print("face: " + str(faceId) + ", id:" + str(idx), ", x:" + str(x), ", y:" + str(y))
 
                 face_edges = []
                 outer_edges = [10, 338, 297, 332, 284, 251, 389, 356, 454, 323,
