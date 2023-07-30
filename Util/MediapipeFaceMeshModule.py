@@ -23,17 +23,17 @@ class MediapipeFaceMesh:
 
     def drawing_img(self, img, multi_face_landmarks):
         if multi_face_landmarks:
-            for faceId, faceLandmarks in enumerate(multi_face_landmarks):
+            for face_idx, face_landmarks in enumerate(multi_face_landmarks):
                 self.mpDrawingSpec.draw_landmarks(img,
-                                                  faceLandmarks,
+                                                  face_landmarks,
                                                   self.mpFaceMesh.FACEMESH_CONTOURS,
                                                   self.drawingSpec,
                                                   self.drawingSpec)
 
-                # # print landmark
-                # for idx, landmark in enumerate(faceLandmarks.landmark):
-                #     x, y = int(landmark.x * self.imgWidth), int(landmark.y * self.imgHeight)
-                #     print("face: " + str(faceId) + ", id:" + str(idx), ", x:" + str(x), ", y:" + str(y))
+                # print landmark
+                for idx, landmark in enumerate(face_landmarks.landmark):
+                    x, y = int(landmark.x * self.img_width), int(landmark.y * self.img_height)
+                    print("face: " + str(face_idx) + ", id:" + str(idx), ", x:" + str(x), ", y:" + str(y))
 
         return img
 
@@ -45,10 +45,10 @@ class MediapipeFaceMesh:
         edges_array = []
 
         if multi_face_landmarks:
-            for face_idx, landmarks in enumerate(multi_face_landmarks):
+            for face_idx, face_landmarks in enumerate(multi_face_landmarks):
                 array = []
                 for edge_idx in edges_id:
-                    landmark = landmarks.landmark[edge_idx]
+                    landmark = face_landmarks.landmark[edge_idx]
                     x, y = int(landmark.x * self.img_width), int(landmark.y * self.img_height)
                     array.append((x, y))
                 edges_array.append(array)

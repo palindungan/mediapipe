@@ -30,7 +30,7 @@ while True:
 
     # processing
     multi_face_landmarks = mediapipeFaceMesh.processing(img)
-    img = mediapipeFaceMesh.drawing_roi(img, multi_face_landmarks)
+    img = mediapipeFaceMesh.drawing_img(img, multi_face_landmarks)
 
     # show fps
     fps = basicTool.countFps(time=time.time())
