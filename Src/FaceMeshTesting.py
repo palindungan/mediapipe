@@ -18,7 +18,7 @@ global_color = (0, 255, 0)  # default color
 
 # cap = cv2.VideoCapture(basicTool.get_base_url() + "/Resource/Videos/3.mp4")  # read file
 
-# webcam video
+# webcam
 cap = cv2.VideoCapture(no_cam)  # webcam
 cap.set(3, w_cam)  # width
 cap.set(4, h_cam)  # height

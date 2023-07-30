@@ -8,7 +8,7 @@ class MediapipeFaceMesh:
         self.global_color = (0, 255, 0)
         self.img_height, self.img_width, self.img_channel = 0, 0, 0
 
-        # Mediapipe Class
+        # mediapipe class
         self.mpFaceMesh = mp.solutions.face_mesh
         self.faceMesh = self.mpFaceMesh.FaceMesh(max_num_faces=2)
         self.mpDrawingSpec = mp.solutions.drawing_utils
