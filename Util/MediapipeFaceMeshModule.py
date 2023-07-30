@@ -24,7 +24,6 @@ class MediapipeFaceMesh:
     def drawing_img(self, img, multi_face_landmarks):
         if multi_face_landmarks:
             for faceId, faceLandmarks in enumerate(multi_face_landmarks):
-                # Draw the face mesh default
                 self.mpDrawingSpec.draw_landmarks(img,
                                                   faceLandmarks,
                                                   self.mpFaceMesh.FACEMESH_CONTOURS,
