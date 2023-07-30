@@ -51,13 +51,12 @@ class MediapipeFaceMesh:
                 #     x, y = int(landmark.x * imgWidth), int(landmark.y * imgHeight)
                 #     print("face: " + str(faceId) + ", id:" + str(idx), ", x:" + str(x), ", y:" + str(y))
 
-                faceEdgesArray = []
-
+                array = []
                 for idx in self.faceEdgesId:
                     landmark = faceLandmarks.landmark[idx]
                     x, y = int(landmark.x * imgWidth), int(landmark.y * imgHeight)
-                    faceEdgesArray.append((x, y))
-                faceEdgesList.append(faceEdgesArray)
+                    array.append((x, y))
+                faceEdgesList.append(array)
 
         mask = np.zeros_like(imgROI)
         for edges in faceEdgesList:
