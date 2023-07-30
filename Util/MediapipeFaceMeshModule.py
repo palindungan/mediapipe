@@ -15,6 +15,7 @@ class MediapipeFaceMesh:
 
         self.basicTools = BasicToolModule.BasicTool()
 
+        # Mediapipe Class
         self.mpFaceMesh = mp.solutions.face_mesh
         self.faceMesh = self.mpFaceMesh.FaceMesh(max_num_faces=2)
         self.mpDrawingSpec = mp.solutions.drawing_utils
