@@ -55,6 +55,7 @@ class MediapipeFaceMesh:
 
         mask = np.zeros_like(img)
 
+        # Draw the outer face polygon on all faces
         for edge in coordinates:
             points = np.array(edge, np.int32)
             cv2.fillPoly(mask, [points], (255, 255, 255))
