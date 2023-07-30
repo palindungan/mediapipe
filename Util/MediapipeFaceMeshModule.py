@@ -24,11 +24,11 @@ class MediapipeFaceMesh:
         imgContour = self.basicTools.CreateBlankImage(img)
         imgROI = img.copy()
 
+        imgHeight, imgWidth, imgChannel = img.shape
         faceEdgesList = []
 
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         results = self.faceMesh.process(imgRGB)
-
         multiFaceLandmarks = results.multi_face_landmarks
         if multiFaceLandmarks:
             for faceId, faceLandmarks in enumerate(multiFaceLandmarks):
@@ -46,8 +46,7 @@ class MediapipeFaceMesh:
 
                 # print landmark
                 for idx, landmark in enumerate(faceLandmarks.landmark):
-                    ih, iw, ic = img.shape
-                    x, y = int(landmark.x * iw), int(landmark.y * ih)
+                    x, y = int(landmark.x * imgWidth), int(landmark.y * imgHeight)
                     print("face: " + str(faceId) + ", id:" + str(idx), ", x:" + str(x), ", y:" + str(y))
 
                 faceEdgesArray = []
