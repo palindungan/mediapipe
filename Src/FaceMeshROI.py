@@ -29,7 +29,8 @@ while True:
     imgOri = img.copy()
 
     # processing
-    img, imgContour, imgROI = mediapipeFaceMesh.processing(img)
+    multiFaceLandmarks = mediapipeFaceMesh.processing(img)
+    img, imgContour, imgROI = mediapipeFaceMesh.drawing(img)
 
     # show fps
     fps = basicTools.countFps(time=time.time())

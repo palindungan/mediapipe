@@ -12,6 +12,7 @@ class MediapipeFaceMesh:
                             361, 288, 397, 365, 379, 378, 400, 377, 152, 148,
                             176, 149, 150, 136, 172, 58, 132, 93, 234, 127,
                             162, 21, 54, 103, 67, 109, 10]
+        self.multiFaceLandmarks = []
 
         self.basicTools = BasicToolModule.BasicTool()
 
@@ -21,54 +22,11 @@ class MediapipeFaceMesh:
         self.drawingSpec = self.mpDrawingSpec.DrawingSpec(thickness=1, circle_radius=1, color=self.globalColor)
 
     def processing(self, img):
-        imgContour = self.basicTools.CreateBlankImage(img)
-        imgROI = img.copy()
-        imgHeight, imgWidth, imgChannel = img.shape
-
-        faceEdgesList = []
-
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         results = self.faceMesh.process(imgRGB)
-        multiFaceLandmarks = results.multi_face_landmarks
-        if multiFaceLandmarks:
-            for faceId, faceLandmarks in enumerate(multiFaceLandmarks):
-                # Draw the face mesh default
-                self.mpDrawingSpec.draw_landmarks(img,
-                                                  faceLandmarks,
-                                                  self.mpFaceMesh.FACEMESH_CONTOURS,
-                                                  self.drawingSpec,
-                                                  self.drawingSpec)
-                self.mpDrawingSpec.draw_landmarks(imgContour,
-                                                  faceLandmarks,
-                                                  self.mpFaceMesh.FACEMESH_CONTOURS,
-                                                  self.drawingSpec,
-                                                  self.drawingSpec)
+        self.multiFaceLandmarks = results.multi_face_landmarks
 
-                # print landmark
-                for idx, landmark in enumerate(faceLandmarks.landmark):
-                    x, y = int(landmark.x * imgWidth), int(landmark.y * imgHeight)
-                    print("face: " + str(faceId) + ", id:" + str(idx), ", x:" + str(x), ", y:" + str(y))
-
-                faceEdgesArray = []
-
-                for idx in self.faceEdgesId:
-                    landmark = faceLandmarks.landmark[idx]
-                    x, y = int(landmark.x * imgWidth), int(landmark.y * imgHeight)
-                    faceEdgesArray.append((x, y))
-                faceEdgesList.append(faceEdgesArray)
-
-        mask = np.zeros_like(imgROI)
-        for edges in faceEdgesList:
-            points = np.array(edges, np.int32)
-            cv2.fillPoly(mask, [points], (255, 255, 255))
-
-        imgROI[~mask.any(axis=2)] = 0
-
-        for edges in faceEdgesList:
-            for x, y in edges:
-                cv2.circle(imgROI, (x, y), 1, (0, 255, 0), -1)
-
-        return img, imgContour, imgROI
+        return self.multiFaceLandmarks
 
     def drawing(self, img):
         imgContour = self.basicTools.CreateBlankImage(img)
@@ -77,11 +35,8 @@ class MediapipeFaceMesh:
 
         faceEdgesList = []
 
-        imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        results = self.faceMesh.process(imgRGB)
-        multiFaceLandmarks = results.multi_face_landmarks
-        if multiFaceLandmarks:
-            for faceId, faceLandmarks in enumerate(multiFaceLandmarks):
+        if self.multiFaceLandmarks:
+            for faceId, faceLandmarks in enumerate(self.multiFaceLandmarks):
                 # Draw the face mesh default
                 self.mpDrawingSpec.draw_landmarks(img,
                                                   faceLandmarks,
