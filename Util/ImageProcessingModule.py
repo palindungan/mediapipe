@@ -3,7 +3,8 @@ import numpy as np
 
 
 class ImageProcessing:
-    def stackImages(self, scale, imgArray):
+    @staticmethod
+    def stack_images(scale, imgArray):
         rows = len(imgArray)
         cols = len(imgArray[0])
         rowsAvailable = isinstance(imgArray[0], list)
@@ -20,7 +21,7 @@ class ImageProcessing:
                     if len(imgArray[x][y].shape) == 2: imgArray[x][y] = cv2.cvtColor(imgArray[x][y], cv2.COLOR_GRAY2BGR)
             imageBlank = np.zeros((height, width, 3), np.uint8)
             hor = [imageBlank] * rows
-            hor_con = [imageBlank] * rows
+            # hor_con = [imageBlank] * rows
             for x in range(0, rows):
                 hor[x] = np.hstack(imgArray[x])
             ver = np.vstack(hor)
