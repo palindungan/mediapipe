@@ -2,6 +2,7 @@ import cv2
 import mediapipe as mp
 import time
 import numpy as np
+
 from Util import BasicToolModule
 from Util import ImageProcessingModule
 
