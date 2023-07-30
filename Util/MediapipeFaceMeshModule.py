@@ -90,3 +90,20 @@ class MediapipeFaceMesh:
                     print("face: " + str(faceId) + ", id:" + str(idx), ", x:" + str(x), ", y:" + str(y))
 
         return img
+
+    def drawing_roi(self, img, multiFaceLandmarks):
+        if multiFaceLandmarks:
+            for faceId, faceLandmarks in enumerate(multiFaceLandmarks):
+                # Draw the face mesh default
+                self.mpDrawingSpec.draw_landmarks(img,
+                                                  faceLandmarks,
+                                                  self.mpFaceMesh.FACEMESH_CONTOURS,
+                                                  self.drawingSpec,
+                                                  self.drawingSpec)
+
+                # print landmark
+                for idx, landmark in enumerate(faceLandmarks.landmark):
+                    x, y = int(landmark.x * self.imgWidth), int(landmark.y * self.imgHeight)
+                    print("face: " + str(faceId) + ", id:" + str(idx), ", x:" + str(x), ", y:" + str(y))
+
+        return img
