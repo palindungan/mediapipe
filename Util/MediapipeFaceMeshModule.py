@@ -46,12 +46,12 @@ class MediapipeFaceMesh:
 
         if multi_face_landmarks:
             for face_idx, face_landmarks in enumerate(multi_face_landmarks):
-                array = []
+                coordinate = []
                 for edge_idx in edges:
                     landmark = face_landmarks.landmark[edge_idx]
                     x, y = int(landmark.x * self.img_width), int(landmark.y * self.img_height)
-                    array.append((x, y))
-                edges_result.append(array)
+                    coordinate.append((x, y))
+                edges_result.append(coordinate)
 
         mask = np.zeros_like(img)
         for edge in edges_result:
