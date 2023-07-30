@@ -7,7 +7,7 @@ from Util import BasicToolModule
 from Util import ImageProcessingModule
 
 # Utility Class
-basicTools = BasicToolModule.BasicTools()
+basicTools = BasicToolModule.BasicTool()
 imageProcessing = ImageProcessingModule.ImageProcessing()
 
 # Camera Setting
@@ -24,7 +24,7 @@ cap.set(3, wCam)  # width
 cap.set(4, hCam)  # height
 cap.set(10, cameraBrightness)  # brightness
 
-# mediapipe FaceMesh
+# Mediapipe FaceMesh
 mpFaceMesh = mp.solutions.face_mesh
 faceMesh = mpFaceMesh.FaceMesh(max_num_faces=2)
 mpDrawingSpec = mp.solutions.drawing_utils

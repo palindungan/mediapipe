@@ -21,7 +21,7 @@ imgHeight = 120  # Resize height Image
 # End of Setting
 
 # Start of Declare Object Class
-basicTools = BasicToolModule.BasicTools()
+basicTools = BasicToolModule.BasicTool()
 imageProcessing = ImageProcessingModule.ImageProcessing()
 # End of Declare Object Class
 

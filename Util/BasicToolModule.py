@@ -5,7 +5,7 @@ import cv2
 import time
 
 
-class BasicTools():
+class BasicTool():
     def __init__(self):
         self.pTime = 0
         self.countFolder = 0
