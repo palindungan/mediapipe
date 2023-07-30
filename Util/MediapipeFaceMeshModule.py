@@ -2,15 +2,11 @@ import cv2
 import mediapipe as mp
 import numpy as np
 
-from Util import BasicToolModule
-
 
 class MediapipeFaceMesh:
     def __init__(self):
         self.global_color = (0, 255, 0)
         self.img_height, self.img_width, self.img_channel = 0, 0, 0
-
-        self.basicTool = BasicToolModule.BasicTool()
 
         # Mediapipe Class
         self.mpFaceMesh = mp.solutions.face_mesh
