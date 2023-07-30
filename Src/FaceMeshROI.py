@@ -79,10 +79,11 @@ while True:
         for x, y in face_edges:
             cv2.circle(imgROI, (x, y), 1, (0, 255, 0), -1)
 
+    # show fps
     fps = basicTools.countFps(time=time.time())
     cv2.putText(imgOri, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, globalColor, 3)
 
-    # show result in stacked images
+    # show images in stacked
     stackedImages = imageProcessing.stackImages(1, ([imgOri, imgContours], [img, imgROI]))
     cv2.imshow("Stacked Image", stackedImages)
 
