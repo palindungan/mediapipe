@@ -30,14 +30,14 @@ while True:
 
     # processing
     multiFaceLandmarks = mediapipeFaceMesh.processing(img)
-    img, imgContour, imgROI = mediapipeFaceMesh.drawing(img, multiFaceLandmarks)
+    img = mediapipeFaceMesh.drawingImg(img, multiFaceLandmarks)
 
     # show fps
     fps = basicTools.countFps(time=time.time())
     cv2.putText(imgOri, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, globalColor, 3)
 
     # show images in stacked
-    stackedImages = imageProcessing.stackImages(1, ([imgOri, imgContour], [img, imgROI]))
+    stackedImages = imageProcessing.stackImages(1, ([imgOri, img]))
     cv2.imshow("Stacked Image", stackedImages)
 
     # action for end proses
