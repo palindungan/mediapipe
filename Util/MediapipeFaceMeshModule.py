@@ -23,8 +23,8 @@ class MediapipeFaceMesh:
     def processing(self, img):
         imgContour = self.basicTools.CreateBlankImage(img)
         imgROI = img.copy()
-
         imgHeight, imgWidth, imgChannel = img.shape
+
         faceEdgesList = []
 
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
