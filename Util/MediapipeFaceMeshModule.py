@@ -53,8 +53,7 @@ class MediapipeFaceMesh:
                     coordinate.append((x, y))
                 outer_edge_multi_face_coordinates.append(coordinate)
 
-        # create blank image
-        mask = np.zeros_like(img)
+        mask = np.zeros_like(img)  # create blank image
 
         # draw face mask (roi / true = white)
         for face_idx, edges in enumerate(outer_edge_multi_face_coordinates):
@@ -68,5 +67,20 @@ class MediapipeFaceMesh:
             for x, y in edges:
                 cv2.circle(img, (x, y), 1, (0, 255, 0), -1)
                 # print("face: " + str(face_idx) + ", x:" + str(x), ", y:" + str(y))
+
+        # draw bboxes
+        multi_face_bboxes = []
+        for face_idx, edges in enumerate(outer_edge_multi_face_coordinates):
+            x_list = []
+            y_list = []
+            for x, y in edges:
+                x_list.append(x)
+                y_list.append(y)
+            x_min, x_max = min(x_list), max(x_list)
+            y_min, y_max = min(y_list), max(y_list)
+            bbox = x_min, y_min, x_max, y_max
+            multi_face_bboxes.append(bbox)
+
+            cv2.rectangle(img, (bbox[0] - 20, bbox[1] - 20), (bbox[2] + 20, bbox[3] + 20), (0, 255, 0), 2)
 
         return img
