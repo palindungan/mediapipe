@@ -56,17 +56,20 @@ class MediapipeFaceMesh:
 
         return multi_face_coordinates
 
-    def drawing_roi(self, img, multi_face_landmarks):
-        outer_edges = self.get_outer_edge(multi_face_landmarks)
-
+    @staticmethod
+    def drawing_mask(img, outer_edges):
         mask = np.zeros_like(img)  # create blank image
-
         # draw face mask (roi / true = white)
         for face_idx, edges in enumerate(outer_edges):
             points = np.array(edges, np.int32)
             cv2.fillPoly(mask, [points], (255, 255, 255))
-
         img[~mask.any(axis=2)] = 0  # replace rgb 0 based on ~mask
+        return img
+
+    def drawing_roi(self, img, multi_face_landmarks):
+        outer_edges = self.get_outer_edge(multi_face_landmarks)
+
+        img = self.drawing_mask(img, outer_edges)
 
         # draw bboxes
         multi_face_bboxes = []
