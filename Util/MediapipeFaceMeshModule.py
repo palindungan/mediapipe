@@ -87,9 +87,7 @@ class MediapipeFaceMesh:
 
     def drawing_roi(self, img, multi_face_landmarks):
         outer_edges = self.get_outer_edge(multi_face_landmarks)
-
-        # masking
-        img = self.drawing_mask(img, outer_edges)
+        img = self.drawing_mask(img, outer_edges)  # masking
 
         # draw bboxes
         multi_face_bboxes = self.get_bboxes(outer_edges)
