@@ -37,12 +37,12 @@ class MediapipeFaceMesh:
 
         return img
 
-    def drawing_roi(self, img, multi_face_landmarks):
+    def get_outer_edge(self, multi_face_landmarks):
         outer_edges = [10, 338, 297, 332, 284, 251, 389, 356, 454, 323,
                        361, 288, 397, 365, 379, 378, 400, 377, 152, 148,
                        176, 149, 150, 136, 172, 58, 132, 93, 234, 127,
                        162, 21, 54, 103, 67, 109, 10]
-        outer_edge_multi_face_coordinates = []
+        multi_face_coordinates = []
 
         if multi_face_landmarks:
             for face_idx, face_landmarks in enumerate(multi_face_landmarks):
@@ -51,7 +51,12 @@ class MediapipeFaceMesh:
                     landmark = face_landmarks.landmark[edge_idx]
                     x, y = int(landmark.x * self.img_width), int(landmark.y * self.img_height)
                     coordinate.append((x, y))
-                outer_edge_multi_face_coordinates.append(coordinate)
+                multi_face_coordinates.append(coordinate)
+
+        return multi_face_coordinates
+
+    def drawing_roi(self, img, multi_face_landmarks):
+        outer_edge_multi_face_coordinates = self.get_outer_edge(multi_face_landmarks)
 
         mask = np.zeros_like(img)  # create blank image
 
