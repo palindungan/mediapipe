@@ -57,21 +57,7 @@ class MediapipeFaceMesh:
         return multi_face_coordinates
 
     @staticmethod
-    def drawing_mask(img, outer_edges):
-        mask = np.zeros_like(img)  # create blank image
-        # draw face mask (roi / true = white)
-        for face_idx, edges in enumerate(outer_edges):
-            points = np.array(edges, np.int32)
-            cv2.fillPoly(mask, [points], (255, 255, 255))
-        img[~mask.any(axis=2)] = 0  # replace rgb 0 based on ~mask
-        return img
-
-    def drawing_roi(self, img, multi_face_landmarks):
-        outer_edges = self.get_outer_edge(multi_face_landmarks)
-
-        img = self.drawing_mask(img, outer_edges)
-
-        # draw bboxes
+    def get_bboxes(outer_edges):
         multi_face_bboxes = []
         for face_idx, edges in enumerate(outer_edges):
             x_list = []
@@ -86,8 +72,28 @@ class MediapipeFaceMesh:
 
             padding = 20
             bbox = x_min - padding, y_min - padding, x_max + padding, y_max + padding
-            cv2.rectangle(img, (bbox[0], bbox[1]), (bbox[2], bbox[3]), self.global_color, 2)
-
             multi_face_bboxes.append(bbox)
+        return multi_face_bboxes
+
+    @staticmethod
+    def drawing_mask(img, outer_edges):
+        mask = np.zeros_like(img)  # create blank image
+        # draw face mask (roi / true = white)
+        for face_idx, edges in enumerate(outer_edges):
+            points = np.array(edges, np.int32)
+            cv2.fillPoly(mask, [points], (255, 255, 255))
+        img[~mask.any(axis=2)] = 0  # replace rgb 0 based on ~mask
+        return img
+
+    def drawing_roi(self, img, multi_face_landmarks):
+        outer_edges = self.get_outer_edge(multi_face_landmarks)
+
+        # masking
+        img = self.drawing_mask(img, outer_edges)
+
+        # draw bboxes
+        multi_face_bboxes = self.get_bboxes(outer_edges)
+        for face_idx, bbox in enumerate(multi_face_bboxes):
+            cv2.rectangle(img, (bbox[0], bbox[1]), (bbox[2], bbox[3]), self.global_color, 2)
 
         return img
