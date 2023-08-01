@@ -62,25 +62,22 @@ class MediapipeFaceMesh:
 
         img[~mask.any(axis=2)] = 0  # replace rgb 0 based on ~mask
 
-        # draw outer face circle
-        for face_idx, edges in enumerate(outer_edge_multi_face_coordinates):
-            for x, y in edges:
-                cv2.circle(img, (x, y), 1, (0, 255, 0), -1)
-                # print("face: " + str(face_idx) + ", x:" + str(x), ", y:" + str(y))
-
         # draw bboxes
         multi_face_bboxes = []
         for face_idx, edges in enumerate(outer_edge_multi_face_coordinates):
             x_list = []
             y_list = []
+
             for x, y in edges:
+                print("face: " + str(face_idx) + ", x:" + str(x), ", y:" + str(y))
                 x_list.append(x)
                 y_list.append(y)
+
             x_min, x_max = min(x_list), max(x_list)
             y_min, y_max = min(y_list), max(y_list)
             bbox = x_min, y_min, x_max, y_max
-            multi_face_bboxes.append(bbox)
-
             cv2.rectangle(img, (bbox[0] - 20, bbox[1] - 20), (bbox[2] + 20, bbox[3] + 20), (0, 255, 0), 2)
+
+            multi_face_bboxes.append(bbox)
 
         return img
