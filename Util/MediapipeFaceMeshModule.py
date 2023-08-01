@@ -75,8 +75,10 @@ class MediapipeFaceMesh:
 
             x_min, x_max = min(x_list), max(x_list)
             y_min, y_max = min(y_list), max(y_list)
-            bbox = x_min, y_min, x_max, y_max
-            cv2.rectangle(img, (bbox[0] - 20, bbox[1] - 20), (bbox[2] + 20, bbox[3] + 20), (0, 255, 0), 2)
+
+            padding = 20
+            bbox = x_min - padding, y_min - padding, x_max + padding, y_max + padding
+            cv2.rectangle(img, (bbox[0], bbox[1]), (bbox[2], bbox[3]), self.global_color, 2)
 
             multi_face_bboxes.append(bbox)
 
