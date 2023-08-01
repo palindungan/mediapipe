@@ -53,6 +53,8 @@ class MediapipeFaceMesh:
                     coordinate.append((x, y))
                 multi_face_coordinates.append(coordinate)
 
+                print("face: " + str(face_idx) + ", x:" + str(x), ", y:" + str(y))
+
         return multi_face_coordinates
 
     def drawing_roi(self, img, multi_face_landmarks):
@@ -74,7 +76,6 @@ class MediapipeFaceMesh:
             y_list = []
 
             for x, y in edges:
-                print("face: " + str(face_idx) + ", x:" + str(x), ", y:" + str(y))
                 x_list.append(x)
                 y_list.append(y)
 
