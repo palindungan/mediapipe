@@ -50,8 +50,8 @@ class MediapipeFaceMesh:
                 for edge_idx in outer_edges:
                     landmark = face_landmarks.landmark[edge_idx]
                     x, y = int(landmark.x * self.img_width), int(landmark.y * self.img_height)
-                    coordinate.append((x, y))
                     print("face: " + str(face_idx) + ", x:" + str(x), ", y:" + str(y))
+                    coordinate.append((x, y))
                 multi_face_coordinates.append(coordinate)
 
         return multi_face_coordinates
