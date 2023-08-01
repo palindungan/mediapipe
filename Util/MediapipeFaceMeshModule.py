@@ -53,8 +53,10 @@ class MediapipeFaceMesh:
                     coordinate.append((x, y))
                 outer_edge_multi_face_coordinates.append(coordinate)
 
-        # draw face mask (roi / true = white)
+        # create blank image
         mask = np.zeros_like(img)
+
+        # draw face mask (roi / true = white)
         for face_idx, edges in enumerate(outer_edge_multi_face_coordinates):
             points = np.array(edges, np.int32)
             cv2.fillPoly(mask, [points], (255, 255, 255))
