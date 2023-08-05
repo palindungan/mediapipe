@@ -23,6 +23,12 @@ class BasicTool:
     def get_base_url():
         return sys.path[1]
 
+    def create_directory(self, path):
+        self.count_folder = 0
+        while os.path.exists(path + str(self.count_folder)):
+            self.count_folder = self.count_folder + 1
+        os.makedirs(path + str(self.count_folder))
+
     def save_image(self, path, img, module_val, min_blur):
         blur = cv2.Laplacian(img, cv2.CV_64F).var()
         if self.count % module_val == 0 and blur > min_blur:
