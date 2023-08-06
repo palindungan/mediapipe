@@ -10,6 +10,8 @@ import numpy as np
 import pickle
 import cv2
 
+from keras_facenet import FaceNet
+
 # ------------------
 
 import time
@@ -36,6 +38,8 @@ cap = cv2.VideoCapture(basicTool.get_base_url() + "/Resource/Videos/3.mp4")  # r
 # cap.set(3, w_cam)  # width
 # cap.set(4, h_cam)  # height
 # cap.set(10, camera_brightness)  # brightness
+
+MyFaceNet = FaceNet()
 
 while True:
     success, img = cap.read()
