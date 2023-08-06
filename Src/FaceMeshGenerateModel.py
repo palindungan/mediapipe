@@ -39,18 +39,14 @@ for filename in listdir(folder):
     multi_face_landmarks = mediapipeFaceMesh.processing(gbr1)
     get_roi_images = mediapipeFaceMesh.get_roi_images(gbr1, multi_face_landmarks)
 
-    wajah = []
-
     for roi_idx, roi_image in enumerate(get_roi_images):
-        wajah = roi_image
+        face = cv2.cvtColor(roi_image, cv2.COLOR_BGR2RGB)
+        face = cv2.resize(face, (160, 160))
 
-    face = cv2.cvtColor(wajah, cv2.COLOR_BGR2RGB)
-    face = cv2.resize(face, (160, 160))
+        face = expand_dims(face, axis=0)
+        signature = MyFaceNet.embeddings(face)
 
-    face = expand_dims(face, axis=0)
-    signature = MyFaceNet.embeddings(face)
-
-    database[os.path.splitext(filename)[0]] = signature
+        database[os.path.splitext(filename)[0]] = signature
 
 print(database)
 
