@@ -95,3 +95,16 @@ class MediapipeFaceMesh:
             cv2.rectangle(img, (bbox[0], bbox[1]), (bbox[2], bbox[3]), self.global_color, 2)
 
         return img
+
+    def get_roi_images(self, img, multi_face_landmarks):
+        outer_edges = self.get_outer_edge(multi_face_landmarks)
+        img = self.drawing_mask(img, outer_edges)  # masking
+
+        images = []
+
+        # draw bboxes
+        multi_face_bboxes = self.get_bboxes(outer_edges)
+        for face_idx, bbox in enumerate(multi_face_bboxes):
+            images.append(img[abs(bbox[1]): abs(bbox[3]), abs(bbox[0]):abs(bbox[2])])
+
+        return images
