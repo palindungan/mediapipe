@@ -29,16 +29,14 @@ class BasicTool:
         os.makedirs(path + str(self.count_folder))
 
     def save_image(self, path, img, module_val, min_blur):
-        blur = cv2.Laplacian(img, cv2.CV_64F).var()
-        if self.count % module_val == 0 and blur > min_blur:
+        # blur = cv2.Laplacian(img, cv2.CV_64F).var()
+        if self.count % module_val == 0:
             now = time.time()
             cv2.imwrite(
                 path +
                 str(self.count_folder) +
                 '/' +
                 str(self.count_saved) +
-                '_' +
-                str(int(blur)) +
                 '_' +
                 str(now) + '.png',
                 img

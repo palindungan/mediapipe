@@ -17,7 +17,7 @@ no_cam = 1  # default Cam
 camera_brightness = 190  # set brightness
 global_color = (0, 255, 0)  # default color
 
-cap = cv2.VideoCapture(basicTool.get_base_url() + "/Resource/Videos/3.mp4")  # read file
+cap = cv2.VideoCapture(basicTool.get_base_url() + "/Resource/Videos/2.mp4")  # read file
 
 # # webcam
 # cap = cv2.VideoCapture(no_cam)  # webcam
@@ -27,7 +27,7 @@ cap = cv2.VideoCapture(basicTool.get_base_url() + "/Resource/Videos/3.mp4")  # r
 
 path_save = basicTool.get_base_url() + '/Resource/Dataset/'  # PATH TO SAVE IMAGE
 count_saved = 0
-is_save_data = False
+is_save_data = True
 
 if is_save_data:
     basicTool.create_directory(path_save)
