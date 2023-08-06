@@ -39,7 +39,7 @@ while True:
     # processing
     multi_face_landmarks = mediapipeFaceMesh.processing(img)
 
-    # get roi
+    # save roi
     get_roi_images = mediapipeFaceMesh.get_roi_images(img, multi_face_landmarks)
     for roi_idx, roi_image in enumerate(get_roi_images):
         count_saved = basicTool.save_image(path_save, roi_image, 5, 500)
@@ -52,6 +52,7 @@ while True:
     # show fps
     fps = basicTool.countFps(my_time=time.time())
     cv2.putText(img_ori, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, global_color, 3)
+    cv2.putText(img_ori, f'Saved: {int(count_saved)}', (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, global_color, 3)
 
     # show images in stacked
     stacked_images = imageProcessing.stack_images(1, ([img_ori, roi_images]))
