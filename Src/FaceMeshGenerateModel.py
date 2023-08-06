@@ -59,3 +59,7 @@ for filename in listdir(folder):
     signature = MyFaceNet.embeddings(face)
 
     database[os.path.splitext(filename)[0]] = signature
+
+myfile = open(basicTool.get_base_url() + '/Resource/' + 'data.pkl', "wb")
+pickle.dump(database, myfile)
+myfile.close()
