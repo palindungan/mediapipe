@@ -11,7 +11,7 @@ class BasicTool:
         self.count_folder = 0
         self.count_saved = 0
 
-    def countFps(self, my_time):
+    def count_fps(self, my_time):
         c_time = my_time
         fps = 1 / (c_time - self.p_time)
         self.p_time = c_time

@@ -33,7 +33,7 @@ while True:
     img = mediapipeFaceMesh.drawing_roi(img, multi_face_landmarks)
 
     # show fps
-    fps = basicTool.countFps(my_time=time.time())
+    fps = basicTool.count_fps(my_time=time.time())
     cv2.putText(img_ori, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, global_color, 3)
 
     # show images in stacked

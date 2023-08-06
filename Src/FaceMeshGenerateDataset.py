@@ -50,7 +50,7 @@ while True:
         roi_images = imageProcessing.stack_images(1, get_roi_images)
 
     # show fps
-    fps = basicTool.countFps(my_time=time.time())
+    fps = basicTool.count_fps(my_time=time.time())
     cv2.putText(img_ori, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, global_color, 3)
     cv2.putText(img_ori, f'Saved: {int(count_saved)}', (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, global_color, 3)
 
