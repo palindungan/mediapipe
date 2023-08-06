@@ -24,6 +24,14 @@ cap = cv2.VideoCapture(basicTool.get_base_url() + "/Resource/Videos/3.mp4")  # r
 # cap.set(4, h_cam)  # height
 # cap.set(10, camera_brightness)  # brightness
 
+count_saved = 0
+is_save_data = True
+
+path = basicTool.get_base_url() + '/Resource/Dataset/'  # PATH TO SAVE IMAGE
+
+if is_save_data:
+    basicTool.create_directory(path)
+
 while True:
     success, img = cap.read()
     img_ori = img.copy()
