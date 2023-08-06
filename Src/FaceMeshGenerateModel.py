@@ -25,38 +25,41 @@ basicTool = BasicToolModule.BasicTool()
 imageProcessing = ImageProcessingModule.ImageProcessing()
 mediapipeFaceMesh = MediapipeFaceMeshModule.MediapipeFaceMesh()
 
-# camera setting
-w_cam, h_cam = 480, 360  # width and height image
-no_cam = 1  # default Cam
-camera_brightness = 190  # set brightness
-global_color = (0, 255, 0)  # default color
-
-cap = cv2.VideoCapture(basicTool.get_base_url() + "/Resource/Videos/3.mp4")  # read file
-
-# # webcam
-# cap = cv2.VideoCapture(no_cam)  # webcam
-# cap.set(3, w_cam)  # width
-# cap.set(4, h_cam)  # height
-# cap.set(10, camera_brightness)  # brightness
-
 MyFaceNet = FaceNet()
 
-while True:
-    success, img = cap.read()
-    img_ori = img.copy()
+folder = basicTool.get_base_url() + '/Resource/fotoPeserta/'
+database = {}
 
-    # processing
-    multi_face_landmarks = mediapipeFaceMesh.processing(img)
-    img = mediapipeFaceMesh.drawing_roi(img, multi_face_landmarks)
+for filename in listdir(folder):
 
-    # show fps
-    fps = basicTool.count_fps(my_time=time.time())
-    cv2.putText(img_ori, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, global_color, 3)
+    path = folder + filename
+    gbr1 = cv2.imread(folder + filename)
 
-    # show images in stacked
-    stacked_images = imageProcessing.stack_images(1, ([img_ori, img]))
-    cv2.imshow("Stacked Image", stacked_images)
+    wajah = HaarCascade.detectMultiScale(gbr1, 1.1, 4)
 
-    # action for end proses
-    if cv2.waitKey(1) & 0xff == ord('q'):
-        break
+    if len(wajah) > 0:
+        x1, y1, width, height = wajah[0]
+    else:
+        x1, y1, width, height = 1, 1, 10, 10
+
+    x1, y1 = abs(x1), abs(y1)
+    x2, y2 = x1 + width, y1 + height
+
+    gbr = cv2.cvtColor(gbr1, cv2.COLOR_BGR2RGB)
+    gbr = Image.fromarray(gbr)  # konversi dari OpenCV ke PIL
+    gbr_array = asarray(gbr)
+
+    face = gbr_array[y1:y2, x1:x2]
+
+    face = Image.fromarray(face)
+    face = face.resize((160, 160))
+    face = asarray(face)
+
+    face = face.astype('float32')
+    mean, std = face.mean(), face.std()
+    face = (face - mean) / std
+
+    face = expand_dims(face, axis=0)
+    signature = MyFaceNet.predict(face)
+
+    database[os.path.splitext(filename)[0]] = signature
