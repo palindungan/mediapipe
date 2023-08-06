@@ -25,7 +25,7 @@ basicTool = BasicToolModule.BasicTool()
 imageProcessing = ImageProcessingModule.ImageProcessing()
 mediapipeFaceMesh = MediapipeFaceMeshModule.MediapipeFaceMesh()
 
-# MyFaceNet = FaceNet()
+MyFaceNet = FaceNet()
 
 folder = basicTool.get_base_url() + '/Resource/fotoPeserta/'
 database = {}
@@ -37,8 +37,6 @@ for filename in listdir(folder):
 
     # processing
     multi_face_landmarks = mediapipeFaceMesh.processing(gbr1)
-
-    # get roi
     get_roi_images = mediapipeFaceMesh.get_roi_images(gbr1, multi_face_landmarks)
 
     wajah = []
@@ -49,16 +47,13 @@ for filename in listdir(folder):
     face = cv2.cvtColor(wajah, cv2.COLOR_BGR2RGB)
     face = cv2.resize(face, (160, 160))
 
-    cv2.imshow('face', face)
-    cv2.waitKey(0)
+    face = expand_dims(face, axis=0)
+    signature = MyFaceNet.embeddings(face)
 
-    # face = expand_dims(face, axis=0)
-    # signature = MyFaceNet.embeddings(face)
-    #
-    # database[os.path.splitext(filename)[0]] = signature
+    database[os.path.splitext(filename)[0]] = signature
 
 print(database)
 
-# myfile = open(basicTool.get_base_url() + '/Resource/' + 'data.pkl', "wb")
-# pickle.dump(database, myfile)
-# myfile.close()
+myfile = open(basicTool.get_base_url() + '/Resource/' + 'data.pkl', "wb")
+pickle.dump(database, myfile)
+myfile.close()
