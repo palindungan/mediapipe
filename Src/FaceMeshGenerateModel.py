@@ -55,11 +55,7 @@ for filename in listdir(folder):
     face = face.resize((160, 160))
     face = asarray(face)
 
-    face = face.astype('float32')
-    mean, std = face.mean(), face.std()
-    face = (face - mean) / std
-
     face = expand_dims(face, axis=0)
-    signature = MyFaceNet.predict(face)
+    signature = MyFaceNet.embeddings(face)
 
     database[os.path.splitext(filename)[0]] = signature
