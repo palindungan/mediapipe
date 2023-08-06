@@ -41,6 +41,8 @@ while True:
 
     # get roi
     get_roi_images = mediapipeFaceMesh.get_roi_images(img, multi_face_landmarks)
+    for roi_idx, roi_image in enumerate(get_roi_images):
+        count_saved = basicTool.save_image(path_save, roi_image, 5, 500)
 
     # generate stacked roi images
     roi_images = np.zeros_like(img)
