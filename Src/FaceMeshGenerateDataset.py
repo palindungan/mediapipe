@@ -41,9 +41,11 @@ while True:
 
     # get roi
     get_roi_images = mediapipeFaceMesh.get_roi_images(img, multi_face_landmarks)
-    # roi_images = np.zeros_like(img)
-    # if len(get_roi_images) > 0:
-    #     roi_images = imageProcessing.stack_images(1, get_roi_images)
+
+    # generate stacked roi images
+    roi_images = np.zeros_like(img)
+    if len(get_roi_images) > 0:
+        roi_images = imageProcessing.stack_images(1, get_roi_images)
 
     # show fps
     fps = basicTool.countFps(my_time=time.time())
