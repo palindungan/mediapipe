@@ -50,6 +50,16 @@ while True:
         face = np.expand_dims(face, axis=0)
         signature = MyFaceNet.embeddings(face)
 
+        min_dist = 100
+        identity = ' '
+        for key, value in database.items():
+            dist = np.linalg.norm(value - signature)
+            if dist < min_dist:
+                min_dist = dist
+                identity = key
+
+        cv2.putText(img_ori, identity, (20, 70), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2, cv2.LINE_AA)
+
     # show fps
     fps = basicTool.count_fps(my_time=time.time())
     cv2.putText(img_ori, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, global_color, 3)
