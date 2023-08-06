@@ -27,7 +27,7 @@ cap = cv2.VideoCapture(basicTool.get_base_url() + "/Resource/Videos/3.mp4")  # r
 
 path_save = basicTool.get_base_url() + '/Resource/Dataset/'  # PATH TO SAVE IMAGE
 count_saved = 0
-is_save_data = True
+is_save_data = False
 
 if is_save_data:
     basicTool.create_directory(path_save)
@@ -39,10 +39,13 @@ while True:
     # processing
     multi_face_landmarks = mediapipeFaceMesh.processing(img)
 
-    # save roi
+    # get roi
     get_roi_images = mediapipeFaceMesh.get_roi_images(img, multi_face_landmarks)
-    for roi_idx, roi_image in enumerate(get_roi_images):
-        count_saved = basicTool.save_image(path_save, roi_image, 5, 500)
+
+    # save roi
+    if is_save_data:
+        for roi_idx, roi_image in enumerate(get_roi_images):
+            count_saved = basicTool.save_image(path_save, roi_image, 5, 500)
 
     # generate stacked roi images
     roi_images = np.zeros_like(img)
@@ -52,7 +55,7 @@ while True:
     # show fps
     fps = basicTool.count_fps(my_time=time.time())
     cv2.putText(img_ori, f'FPS {int(fps)}', (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, global_color, 3)
-    cv2.putText(img_ori, f'Saved: {int(count_saved)}', (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, global_color, 3)
+    cv2.putText(img_ori, f'Saved: {int(count_saved)}', (20, 70), cv2.FONT_HERSHEY_SIMPLEX, 1, global_color, 3)
 
     # show images in stacked
     stacked_images = imageProcessing.stack_images(1, ([img_ori, roi_images]))
