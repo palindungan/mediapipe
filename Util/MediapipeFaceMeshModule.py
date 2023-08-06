@@ -105,6 +105,7 @@ class MediapipeFaceMesh:
         # draw bboxes
         multi_face_bboxes = self.get_bboxes(outer_edges)
         for face_idx, bbox in enumerate(multi_face_bboxes):
-            images.append(img[abs(bbox[1]): abs(bbox[3]), abs(bbox[0]):abs(bbox[2])])
+            img_cropped = img[abs(bbox[1]): abs(bbox[3]), abs(bbox[0]):abs(bbox[2])]
+            images.append(img_cropped)
 
         return images
