@@ -2,7 +2,6 @@ import cv2
 import time
 import pickle
 import numpy as np
-import os
 
 from keras_facenet import FaceNet
 
@@ -21,7 +20,7 @@ no_cam = 1  # default Cam
 camera_brightness = 190  # set brightness
 global_color = (0, 255, 0)  # default color
 
-cap = cv2.VideoCapture(basicTool.get_base_url() + "/Resource/Videos/1.mp4")  # read file
+cap = cv2.VideoCapture(basicTool.get_base_url() + "/Resource/Videos/2.mp4")  # read file
 
 # # webcam
 # cap = cv2.VideoCapture(no_cam)  # webcam
