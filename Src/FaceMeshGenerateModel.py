@@ -25,7 +25,7 @@ basicTool = BasicToolModule.BasicTool()
 imageProcessing = ImageProcessingModule.ImageProcessing()
 mediapipeFaceMesh = MediapipeFaceMeshModule.MediapipeFaceMesh()
 
-MyFaceNet = FaceNet()
+# MyFaceNet = FaceNet()
 
 folder = basicTool.get_base_url() + '/Resource/fotoPeserta/'
 database = {}
@@ -35,31 +35,30 @@ for filename in listdir(folder):
     path = folder + filename
     gbr1 = cv2.imread(folder + filename)
 
-    wajah = HaarCascade.detectMultiScale(gbr1, 1.1, 4)
+    # processing
+    multi_face_landmarks = mediapipeFaceMesh.processing(gbr1)
 
-    if len(wajah) > 0:
-        x1, y1, width, height = wajah[0]
-    else:
-        x1, y1, width, height = 1, 1, 10, 10
+    # get roi
+    get_roi_images = mediapipeFaceMesh.get_roi_images(gbr1, multi_face_landmarks)
 
-    x1, y1 = abs(x1), abs(y1)
-    x2, y2 = x1 + width, y1 + height
+    wajah = []
 
-    gbr = cv2.cvtColor(gbr1, cv2.COLOR_BGR2RGB)
-    gbr = Image.fromarray(gbr)  # konversi dari OpenCV ke PIL
-    gbr_array = asarray(gbr)
+    for roi_idx, roi_image in enumerate(get_roi_images):
+        wajah = roi_image
 
-    face = gbr_array[y1:y2, x1:x2]
+    face = cv2.cvtColor(wajah, cv2.COLOR_BGR2RGB)
+    face = cv2.resize(face, (160, 160))
 
-    face = Image.fromarray(face)
-    face = face.resize((160, 160))
-    face = asarray(face)
+    cv2.imshow('face', face)
+    cv2.waitKey(0)
 
-    face = expand_dims(face, axis=0)
-    signature = MyFaceNet.embeddings(face)
+    # face = expand_dims(face, axis=0)
+    # signature = MyFaceNet.embeddings(face)
+    #
+    # database[os.path.splitext(filename)[0]] = signature
 
-    database[os.path.splitext(filename)[0]] = signature
+print(database)
 
-myfile = open(basicTool.get_base_url() + '/Resource/' + 'data.pkl', "wb")
-pickle.dump(database, myfile)
-myfile.close()
+# myfile = open(basicTool.get_base_url() + '/Resource/' + 'data.pkl', "wb")
+# pickle.dump(database, myfile)
+# myfile.close()
