@@ -29,11 +29,11 @@ cap = cv2.VideoCapture(basicTool.get_base_url() + "/Resource/Videos/1.mp4")  # r
 # cap.set(4, h_cam)  # height
 # cap.set(10, camera_brightness)  # brightness
 
-MyFaceNet = FaceNet()
+face_net = FaceNet()
 
-my_file = open(basicTool.get_base_url() + '/Resource/' + 'data.pkl', "rb")
-database = pickle.load(my_file)
-my_file.close()
+model_file = open(basicTool.get_base_url() + '/Resource/' + 'data.pkl', "rb")
+model_database = pickle.load(model_file)
+model_file.close()
 
 while True:
     success, img = cap.read()
@@ -48,11 +48,11 @@ while True:
         face = cv2.resize(face, (160, 160))
 
         face = np.expand_dims(face, axis=0)
-        signature = MyFaceNet.embeddings(face)
+        signature = face_net.embeddings(face)
 
         min_dist = 100
         identity = ' '
-        for key, value in database.items():
+        for key, value in model_database.items():
             dist = np.linalg.norm(value - signature)
             if dist < min_dist:
                 min_dist = dist
