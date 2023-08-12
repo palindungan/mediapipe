@@ -41,8 +41,9 @@ while True:
     # processing
     multi_face_landmarks = mediapipeFaceMesh.processing(img)
     get_roi_images = mediapipeFaceMesh.get_roi_images(img, multi_face_landmarks)
+    roi_images, roi_bboxes = get_roi_images
 
-    for roi_idx, roi_image in enumerate(get_roi_images):
+    for roi_idx, roi_image in enumerate(roi_images):
         face = cv2.cvtColor(roi_image, cv2.COLOR_BGR2RGB)
         face = cv2.resize(face, (160, 160))
 
@@ -50,14 +51,18 @@ while True:
         signature = face_net.embeddings(face)
 
         min_dist = 100
-        identity = ' '
+        identity = 'unknown'
         for key, value in model_database.items():
             dist = np.linalg.norm(value - signature)
             if dist < min_dist:
                 min_dist = dist
                 identity = key
 
-        cv2.putText(img_ori, identity, (20, 70), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2, cv2.LINE_AA)
+        roi_bbox = roi_bboxes[roi_idx]
+
+        cv2.rectangle(img_ori, (roi_bbox[0], roi_bbox[1]), (roi_bbox[2], roi_bbox[3]), global_color, 2)
+        cv2.putText(img_ori, identity, (roi_bbox[0], roi_bbox[1]), cv2.FONT_HERSHEY_SIMPLEX, 1, global_color, 2,
+                    cv2.LINE_AA)
 
     # show fps
     fps = basicTool.count_fps(my_time=time.time())

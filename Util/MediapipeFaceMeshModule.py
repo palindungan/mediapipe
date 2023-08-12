@@ -101,6 +101,7 @@ class MediapipeFaceMesh:
         img = self.drawing_mask(img, outer_edges)  # masking
 
         images = []
+        bboxes = []
 
         # draw bboxes
         multi_face_bboxes = self.get_bboxes(outer_edges)
@@ -109,4 +110,5 @@ class MediapipeFaceMesh:
             width, height = img_cropped.shape[:2]
             if width > 0 and height > 0:
                 images.append(img_cropped)
-        return images
+                bboxes.append(bbox)
+        return images, bboxes
