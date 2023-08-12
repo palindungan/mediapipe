@@ -38,8 +38,9 @@ for filename in listdir(folder):
     # processing
     multi_face_landmarks = mediapipeFaceMesh.processing(gbr1)
     get_roi_images = mediapipeFaceMesh.get_roi_images(gbr1, multi_face_landmarks)
+    roi_images, roi_bboxes = get_roi_images
 
-    for roi_idx, roi_image in enumerate(get_roi_images):
+    for roi_idx, roi_image in enumerate(roi_images):
         face = cv2.cvtColor(roi_image, cv2.COLOR_BGR2RGB)
         face = cv2.resize(face, (160, 160))
 
