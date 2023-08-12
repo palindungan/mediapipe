@@ -45,8 +45,6 @@ for label in listdir(folder):
         for roi_idx, roi_image in enumerate(roi_images):
             face = cv2.cvtColor(roi_image, cv2.COLOR_BGR2RGB)
             face = cv2.resize(face, (160, 160))
-
-            face = expand_dims(face, axis=0)
             faces.append(face)
 
             # cv2.imshow("roi_image", roi_image)
@@ -54,7 +52,7 @@ for label in listdir(folder):
             #     break
 
     if len(faces) > 0:
-        signature = MyFaceNet.embeddings(faces[0])
+        signature = MyFaceNet.embeddings(faces)
         database[os.path.splitext(label)[0]] = signature
 
 print(database)
