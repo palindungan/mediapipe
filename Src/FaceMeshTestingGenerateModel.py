@@ -31,15 +31,15 @@ folder = basicTool.get_base_url() + '/Resource/Dataset/'
 database = {}
 
 for label in listdir(folder):
-    path = folder + label + '/'
+    file_path = folder + label + '/'
     faces = []
 
-    for filename in listdir(path):
-        gbr1 = cv2.imread(path + filename)
+    for file_name in listdir(file_path):
+        img = cv2.imread(file_path + file_name)
 
         # processing
-        multi_face_landmarks = mediapipeFaceMesh.processing(gbr1)
-        get_roi_images = mediapipeFaceMesh.get_roi_images(gbr1, multi_face_landmarks)
+        multi_face_landmarks = mediapipeFaceMesh.processing(img)
+        get_roi_images = mediapipeFaceMesh.get_roi_images(img, multi_face_landmarks)
         roi_images, roi_bboxes = get_roi_images
 
         for roi_idx, roi_image in enumerate(roi_images):
