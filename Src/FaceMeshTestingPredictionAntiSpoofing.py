@@ -20,17 +20,17 @@ no_cam = 1  # default Cam
 camera_brightness = 190  # set brightness
 global_color = (0, 255, 0)  # default color
 
-cap = cv2.VideoCapture(basicTool.get_base_url() + "/Resource/Videos/1.mp4")  # read file
+# cap = cv2.VideoCapture(basicTool.get_base_url() + "/Resource/Videos/2.mp4")  # read file
 
-# # webcam
-# cap = cv2.VideoCapture(no_cam)  # webcam
-# cap.set(3, w_cam)  # width
-# cap.set(4, h_cam)  # height
-# cap.set(10, camera_brightness)  # brightness
+# webcam
+cap = cv2.VideoCapture(no_cam)  # webcam
+cap.set(3, w_cam)  # width
+cap.set(4, h_cam)  # height
+cap.set(10, camera_brightness)  # brightness
 
 face_net = FaceNet()
 
-model_file = open(basicTool.get_base_url() + '/Resource/' + 'data.pkl', "rb")
+model_file = open(basicTool.get_base_url() + '/Resource/' + 'data_rizki.pkl', "rb")
 model_database = pickle.load(model_file)
 model_file.close()
 
@@ -50,7 +50,7 @@ while True:
         face = np.expand_dims(face, axis=0)
         signature = face_net.embeddings(face)
 
-        min_dist = 100
+        min_dist = 50
         identity = 'unknown'
         for key, value in model_database.items():
             dist = np.linalg.norm(value - signature)
