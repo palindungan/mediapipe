@@ -27,30 +27,38 @@ mediapipeFaceMesh = MediapipeFaceMeshModule.MediapipeFaceMesh()
 
 MyFaceNet = FaceNet()
 
-folder = basicTool.get_base_url() + '/Resource/fotoPeserta/'
+folder = basicTool.get_base_url() + '/Resource/Dataset/'
 database = {}
 
-for filename in listdir(folder):
+for label in listdir(folder):
+    path = folder + label + '/'
+    faces = []
 
-    path = folder + filename
-    gbr1 = cv2.imread(folder + filename)
+    for filename in listdir(path):
+        gbr1 = cv2.imread(path + filename)
 
-    # processing
-    multi_face_landmarks = mediapipeFaceMesh.processing(gbr1)
-    get_roi_images = mediapipeFaceMesh.get_roi_images(gbr1, multi_face_landmarks)
-    roi_images, roi_bboxes = get_roi_images
+        # processing
+        multi_face_landmarks = mediapipeFaceMesh.processing(gbr1)
+        get_roi_images = mediapipeFaceMesh.get_roi_images(gbr1, multi_face_landmarks)
+        roi_images, roi_bboxes = get_roi_images
 
-    for roi_idx, roi_image in enumerate(roi_images):
-        face = cv2.cvtColor(roi_image, cv2.COLOR_BGR2RGB)
-        face = cv2.resize(face, (160, 160))
+        for roi_idx, roi_image in enumerate(roi_images):
+            face = cv2.cvtColor(roi_image, cv2.COLOR_BGR2RGB)
+            face = cv2.resize(face, (160, 160))
 
-        face = expand_dims(face, axis=0)
-        signature = MyFaceNet.embeddings(face)
+            face = expand_dims(face, axis=0)
+            faces.append(face)
 
-        database[os.path.splitext(filename)[0]] = signature
+            # cv2.imshow("roi_image", roi_image)
+            # if cv2.waitKey(1) & 0xff == ord('q'):
+            #     break
+
+    if len(faces) > 0:
+        signature = MyFaceNet.embeddings(faces[0])
+        database[os.path.splitext(label)[0]] = signature
 
 print(database)
 
-myfile = open(basicTool.get_base_url() + '/Resource/' + 'data.pkl', "wb")
+myfile = open(basicTool.get_base_url() + '/Resource/' + 'data_rizki.pkl', "wb")
 pickle.dump(database, myfile)
 myfile.close()
