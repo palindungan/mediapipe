@@ -13,21 +13,21 @@ mediapipeFaceMesh = MediapipeFaceMeshModule.MediapipeFaceMesh()
 
 # camera setting
 w_cam, h_cam = 480, 360  # width and height image
-no_cam = 1  # default Cam
+no_cam = 1  # default Cam : 0
 camera_brightness = 190  # set brightness
 global_color = (0, 255, 0)  # default color
 
-cap = cv2.VideoCapture(basicTool.get_base_url() + "/Resource/Videos/1.mp4")  # read file
+# cap = cv2.VideoCapture(basicTool.get_base_url() + "/Resource/Videos/1.mp4")  # read file
 
-# # webcam
-# cap = cv2.VideoCapture(no_cam)  # webcam
-# cap.set(3, w_cam)  # width
-# cap.set(4, h_cam)  # height
-# cap.set(10, camera_brightness)  # brightness
+# webcam
+cap = cv2.VideoCapture(no_cam)  # webcam
+cap.set(3, w_cam)  # width
+cap.set(4, h_cam)  # height
+cap.set(10, camera_brightness)  # brightness
 
 path_save = basicTool.get_base_url() + '/Resource/Dataset/'  # PATH TO SAVE IMAGE
 count_saved = 0
-is_save_data = False
+is_save_data = True
 
 if is_save_data:
     basicTool.create_directory(path_save)
