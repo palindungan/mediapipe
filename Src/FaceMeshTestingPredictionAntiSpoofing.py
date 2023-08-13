@@ -41,7 +41,10 @@ while True:
     for roi_idx, roi_image in enumerate(roi_images):
         roi_bbox = roi_bboxes[roi_idx]
 
-        spoofing_bbox = [roi_bbox[0], roi_bbox[1], roi_bbox[2], roi_bbox[3]]
+        spoofing_bbox = [
+            roi_bbox[0], roi_bbox[1],
+            roi_bbox[2], roi_bbox[3]
+        ]
         cv2.rectangle(img_ori,
                       (spoofing_bbox[0], spoofing_bbox[1]),
                       (spoofing_bbox[2], spoofing_bbox[3]),
