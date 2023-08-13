@@ -1,7 +1,6 @@
 import os
 import cv2
 import numpy as np
-import argparse
 import warnings
 import time
 
@@ -10,6 +9,7 @@ from Util import BasicToolModule
 from Util.AntiSpoof.anti_spoof_predict import AntiSpoofPredict
 from Util.AntiSpoof.generate_patches import CropImage
 from Util.AntiSpoof.utility import parse_model_name
+
 warnings.filterwarnings('ignore')
 
 basicTool = BasicToolModule.BasicTool()
@@ -21,6 +21,7 @@ class AntiSpoofing:
     def __init__(self):
         self.basicTool = BasicToolModule.BasicTool()
 
+    @staticmethod
     def check_image(image):
         height, width, channel = image.shape
         if width / height != 3 / 4:
@@ -29,11 +30,11 @@ class AntiSpoofing:
         else:
             return True
 
-    def test(image_name, model_dir, device_id):
+    def test(self, image_name, model_dir, device_id):
         model_test = AntiSpoofPredict(device_id)
         image_cropper = CropImage()
         image = cv2.imread(SAMPLE_IMAGE_PATH + image_name)
-        result = check_image(image)
+        result = self.check_image(image)
         if result is False:
             return
         image_bbox = model_test.get_bbox(image)
