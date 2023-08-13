@@ -70,17 +70,4 @@ class AntiSpoofing:
             result_text = "FakeFace Score: {:.2f}".format(value)
             color = (0, 0, 255)
         print("Prediction cost {:.2f} s".format(test_speed))
-        cv2.rectangle(
-            image,
-            (image_bbox[0], image_bbox[1]),
-            (image_bbox[0] + image_bbox[2], image_bbox[1] + image_bbox[3]),
-            color, 2)
-        cv2.putText(
-            image,
-            result_text,
-            (image_bbox[0], image_bbox[1] - 5),
-            cv2.FONT_HERSHEY_COMPLEX, 0.5 * image.shape[0] / 1024, color)
-
-        format_ = os.path.splitext(image_name)[-1]
-        result_image_name = image_name.replace(format_, "_result" + format_)
-        cv2.imwrite(SAMPLE_IMAGE_PATH + result_image_name, image)
+        
