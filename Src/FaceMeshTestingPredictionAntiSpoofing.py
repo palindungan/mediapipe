@@ -5,9 +5,9 @@ import argparse
 import warnings
 import time
 
-from src.anti_spoof_predict import AntiSpoofPredict
-from src.generate_patches import CropImage
-from src.utility import parse_model_name
+from Util.AntiSpoof.anti_spoof_predict import AntiSpoofPredict
+from Util.AntiSpoof.generate_patches import CropImage
+from Util.AntiSpoof.utility import parse_model_name
 warnings.filterwarnings('ignore')
 
 
