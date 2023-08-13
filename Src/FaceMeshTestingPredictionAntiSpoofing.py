@@ -5,13 +5,16 @@ import argparse
 import warnings
 import time
 
+from Util import BasicToolModule
+
 from Util.AntiSpoof.anti_spoof_predict import AntiSpoofPredict
 from Util.AntiSpoof.generate_patches import CropImage
 from Util.AntiSpoof.utility import parse_model_name
 warnings.filterwarnings('ignore')
 
+basicTool = BasicToolModule.BasicTool()
 
-SAMPLE_IMAGE_PATH = "./images/sample/"
+SAMPLE_IMAGE_PATH = basicTool.get_base_url() + "/Resource/AntiSpoof/" + "images/sample/"
 
 
 def check_image(image):
@@ -90,7 +93,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--model_dir",
         type=str,
-        default="./resources/anti_spoof_models",
+        default=basicTool.get_base_url() + "/Resource/AntiSpoof/" + "resources/anti_spoof_models",
         help="model_lib used to test")
     parser.add_argument(
         "--image_name",

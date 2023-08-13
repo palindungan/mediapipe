@@ -14,6 +14,8 @@ from datetime import datetime
 from easydict import EasyDict
 from Util.AntiSpoof.utility import make_if_not_exist, get_width_height, get_kernel
 
+from Util import BasicToolModule
+basicTool = BasicToolModule.BasicTool()
 
 def get_default_config():
     conf = EasyDict()
@@ -33,13 +35,13 @@ def get_default_config():
     conf.embedding_size = 128
 
     # dataset
-    conf.train_root_path = './datasets/rgb_image'
+    conf.train_root_path = basicTool.get_base_url() + "/Resource/AntiSpoof/" + 'datasets/rgb_image'
 
     # save file path
-    conf.snapshot_dir_path = './saved_logs/snapshot'
+    conf.snapshot_dir_path = basicTool.get_base_url() + "/Resource/AntiSpoof/" + 'saved_logs/snapshot'
 
     # log path
-    conf.log_path = './saved_logs/jobs'
+    conf.log_path = basicTool.get_base_url() + "/Resource/AntiSpoof/" + 'saved_logs/jobs'
     # tensorboard
     conf.board_loss_every = 10
     # save model/iter

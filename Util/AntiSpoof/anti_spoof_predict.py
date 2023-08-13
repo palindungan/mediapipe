@@ -17,6 +17,9 @@ from Util.AntiSpoof.model_lib.MiniFASNet import MiniFASNetV1, MiniFASNetV2,MiniF
 from Util.AntiSpoof.data_io import transform as trans
 from Util.AntiSpoof.utility import get_kernel, parse_model_name
 
+from Util import BasicToolModule
+basicTool = BasicToolModule.BasicTool()
+
 MODEL_MAPPING = {
     'MiniFASNetV1': MiniFASNetV1,
     'MiniFASNetV2': MiniFASNetV2,
@@ -27,8 +30,8 @@ MODEL_MAPPING = {
 
 class Detection:
     def __init__(self):
-        caffemodel = "./resources/detection_model/Widerface-RetinaFace.caffemodel"
-        deploy = "./resources/detection_model/deploy.prototxt"
+        caffemodel = basicTool.get_base_url() + "/Resource/AntiSpoof/" + "resources/detection_model/Widerface-RetinaFace.caffemodel"
+        deploy = basicTool.get_base_url() + "/Resource/AntiSpoof/" + "resources/detection_model/deploy.prototxt"
         self.detector = cv2.dnn.readNetFromCaffe(deploy, caffemodel)
         self.detector_confidence = 0.6
 
