@@ -41,7 +41,7 @@ while True:
     for roi_idx, roi_image in enumerate(roi_images):
         roi_bbox = roi_bboxes[roi_idx]
 
-        antiSpoofing.test(img, basicTool.get_base_url() + "/Resource/AntiSpoof/" + "resources/anti_spoof_models", 0)
+        # antiSpoofing.test(img, basicTool.get_base_url() + "/Resource/AntiSpoof/" + "resources/anti_spoof_models", 0)
 
         identity = faceRecognition.prediction(roi_image)  # FaceRecognition
 
