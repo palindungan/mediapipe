@@ -30,7 +30,7 @@ cap.set(10, camera_brightness)  # brightness
 
 face_net = FaceNet()
 
-model_file = open(basicTool.get_base_url() + '/Resource/' + 'data_rizki.pkl', "rb")
+model_file = open(basicTool.get_base_url() + '/Resource/' + 'database.pkl', "rb")
 model_database = pickle.load(model_file)
 model_file.close()
 
