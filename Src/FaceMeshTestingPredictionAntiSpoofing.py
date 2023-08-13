@@ -42,8 +42,8 @@ while True:
         roi_bbox = roi_bboxes[roi_idx]
 
         spoofing_bbox = [
-            roi_bbox[0], roi_bbox[1],
-            roi_bbox[2], roi_bbox[3]
+            roi_bbox[0], 0,
+            roi_bbox[2], h_cam
         ]
         cv2.rectangle(img_ori,
                       (spoofing_bbox[0], spoofing_bbox[1]),
