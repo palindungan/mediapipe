@@ -1,18 +1,16 @@
 import cv2
 import time
-import pickle
-import numpy as np
-
-from keras_facenet import FaceNet
 
 from Util import BasicToolModule
 from Util import ImageProcessingModule
 from Util import MediapipeFaceMeshModule
+from Util import FaceRecognitionModule
 
 # utility class
 basicTool = BasicToolModule.BasicTool()
 imageProcessing = ImageProcessingModule.ImageProcessing()
 mediapipeFaceMesh = MediapipeFaceMeshModule.MediapipeFaceMesh()
+faceRecognition = FaceRecognitionModule.FaceRecognition()
 
 # camera setting
 w_cam, h_cam = 480, 360  # width and height image
@@ -28,35 +26,18 @@ cap.set(3, w_cam)  # width
 cap.set(4, h_cam)  # height
 cap.set(10, camera_brightness)  # brightness
 
-face_net = FaceNet()
-
-model_file = open(basicTool.get_base_url() + '/Resource/' + 'database.pkl', "rb")
-model_database = pickle.load(model_file)
-model_file.close()
-
 while True:
     success, img = cap.read()
     img_ori = img.copy()
 
-    # processing
+    # MediapipeFaceMesh processing
     multi_face_landmarks = mediapipeFaceMesh.processing(img)
     get_roi_images = mediapipeFaceMesh.get_roi_images(img, multi_face_landmarks)
     roi_images, roi_bboxes = get_roi_images
 
     for roi_idx, roi_image in enumerate(roi_images):
-        face = cv2.cvtColor(roi_image, cv2.COLOR_BGR2RGB)
-        face = cv2.resize(face, (160, 160))
-
-        face = np.expand_dims(face, axis=0)
-        signature = face_net.embeddings(face)
-
-        min_dist = 50
-        identity = 'unknown'
-        for key, value in model_database.items():
-            dist = np.linalg.norm(value - signature)
-            if dist < min_dist:
-                min_dist = dist
-                identity = key
+        # FaceRecognition prediction
+        identity = faceRecognition.prediction(roi_image)
 
         roi_bbox = roi_bboxes[roi_idx]
 
