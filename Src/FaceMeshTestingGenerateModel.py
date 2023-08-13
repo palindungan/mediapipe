@@ -33,6 +33,6 @@ for label in listdir(folder):
 
 print(database)
 
-file = open(basicTool.get_base_url() + '/Resource/' + 'database.pkl', "wb")
+file = open(basicTool.get_base_url() + '/Resource/' + 'database_testing.pkl', "wb")
 pickle.dump(database, file)
 file.close()
