@@ -36,8 +36,7 @@ while True:
     roi_images, roi_bboxes = get_roi_images
 
     for roi_idx, roi_image in enumerate(roi_images):
-        # FaceRecognition prediction
-        identity = faceRecognition.prediction(roi_image)
+        identity = faceRecognition.prediction(roi_image)  # FaceRecognition
 
         roi_bbox = roi_bboxes[roi_idx]
 
