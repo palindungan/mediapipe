@@ -35,6 +35,7 @@ while True:
     get_roi_images = mediapipeFaceMesh.get_roi_images(img, multi_face_landmarks)
     roi_images, roi_bboxes = get_roi_images
 
+    # MAIN LOGIC
     for roi_idx, roi_image in enumerate(roi_images):
         identity = faceRecognition.prediction(roi_image)  # FaceRecognition
 
