@@ -30,10 +30,11 @@ class AntiSpoofing:
         else:
             return True
 
-    def test(self, image_name, model_dir, device_id):
+    def test(self, image, model_dir, device_id):
         model_test = AntiSpoofPredict(device_id)
         image_cropper = CropImage()
-        image = cv2.imread(SAMPLE_IMAGE_PATH + image_name)
+        # image = cv2.imread(SAMPLE_IMAGE_PATH + image_name)
+        image = cv2.resize(image, (int(image.shape[0] * 3 / 4), image.shape[0]))
         result = self.check_image(image)
         if result is False:
             return
@@ -61,13 +62,5 @@ class AntiSpoofing:
         # draw result of prediction
         label = np.argmax(prediction)
         value = prediction[0][label] / 2
-        if label == 1:
-            print("Image '{}' is Real Face. Score: {:.2f}.".format(image_name, value))
-            result_text = "RealFace Score: {:.2f}".format(value)
-            color = (255, 0, 0)
-        else:
-            print("Image '{}' is Fake Face. Score: {:.2f}.".format(image_name, value))
-            result_text = "FakeFace Score: {:.2f}".format(value)
-            color = (0, 0, 255)
-        print("Prediction cost {:.2f} s".format(test_speed))
-        
+
+        return label, value
