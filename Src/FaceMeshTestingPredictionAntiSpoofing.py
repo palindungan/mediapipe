@@ -52,12 +52,8 @@ while True:
                             abs(spoofing_bbox[0]):abs(spoofing_bbox[2])
                             ]
         cv2.imshow("spoof_img_cropped", spoof_img_cropped)
-        # cv2.rectangle(img_ori,
-        #               (spoofing_bbox[0], spoofing_bbox[1]),
-        #               (spoofing_bbox[2], spoofing_bbox[3]),
-        #               (0, 0, 255),
-        #               2)
-        # antiSpoofing.test(img, basicTool.get_base_url() + "/Resource/AntiSpoof/" + "resources/anti_spoof_models", 0)
+        antiSpoofing.test(spoof_img_cropped,
+                          basicTool.get_base_url() + "/Resource/AntiSpoof/" + "resources/anti_spoof_models", 0)
 
         identity = faceRecognition.prediction(roi_image)  # FaceRecognition
 
