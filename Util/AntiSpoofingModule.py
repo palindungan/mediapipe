@@ -33,7 +33,6 @@ class AntiSpoofing:
     def test(self, image, model_dir, device_id):
         model_test = AntiSpoofPredict(device_id)
         image_cropper = CropImage()
-        # image = cv2.imread(SAMPLE_IMAGE_PATH + image_name)
         image = cv2.resize(image, (int(image.shape[0] * 3 / 4), image.shape[0]))
         result = self.check_image(image)
         if result is False:
