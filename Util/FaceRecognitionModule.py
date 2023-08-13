@@ -24,7 +24,7 @@ class FaceRecognition:
         face = np.expand_dims(face, axis=0)
         signature = self.face_net.embeddings(face)
 
-        min_dist = 50
+        min_dist = 25
         identity = 'unknown'
         for key, value in self.model_database.items():
             dist = np.linalg.norm(value - signature)
