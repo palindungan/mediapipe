@@ -13,7 +13,7 @@ class FaceRecognition:
 
         self.basicTool = BasicToolModule.BasicTool()
 
-        model_file = open(self.basicTool.get_base_url() + '/Resource/' + 'database.pkl', "rb")
+        model_file = open(self.basicTool.get_base_url() + '/Resource/' + 'database_testing.pkl', "rb")
         self.model_database = pickle.load(model_file)
         model_file.close()
 
