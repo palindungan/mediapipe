@@ -5,12 +5,14 @@ from Util import BasicToolModule
 from Util import ImageProcessingModule
 from Util import MediapipeFaceMeshModule
 from Util import FaceRecognitionModule
+from Util import AntiSpoofingModule
 
 # utility class
 basicTool = BasicToolModule.BasicTool()
 imageProcessing = ImageProcessingModule.ImageProcessing()
 mediapipeFaceMesh = MediapipeFaceMeshModule.MediapipeFaceMesh()
 faceRecognition = FaceRecognitionModule.FaceRecognition()
+antiSpoofing = AntiSpoofingModule.AntiSpoofing()
 
 # camera setting
 w_cam, h_cam = 480, 360  # width and height image
@@ -38,6 +40,8 @@ while True:
     # MAIN LOGIC
     for roi_idx, roi_image in enumerate(roi_images):
         roi_bbox = roi_bboxes[roi_idx]
+
+        antiSpoofing.test(img, basicTool.get_base_url() + "/Resource/AntiSpoof/" + "resources/anti_spoof_models", 0)
 
         identity = faceRecognition.prediction(roi_image)  # FaceRecognition
 
