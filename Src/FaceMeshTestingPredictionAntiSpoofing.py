@@ -41,11 +41,17 @@ while True:
     for roi_idx, roi_image in enumerate(roi_images):
         roi_bbox = roi_bboxes[roi_idx]
 
+        spoofing_bbox = [roi_bbox[0], roi_bbox[1], roi_bbox[2], roi_bbox[3]]
+        cv2.rectangle(img_ori,
+                      (spoofing_bbox[0], spoofing_bbox[1]),
+                      (spoofing_bbox[2], spoofing_bbox[3]),
+                      (0, 0, 255),
+                      2)
         # antiSpoofing.test(img, basicTool.get_base_url() + "/Resource/AntiSpoof/" + "resources/anti_spoof_models", 0)
 
         identity = faceRecognition.prediction(roi_image)  # FaceRecognition
 
-        cv2.rectangle(img_ori, (roi_bbox[0], roi_bbox[1]), (roi_bbox[2], roi_bbox[3]), global_color, 2)
+        # cv2.rectangle(img_ori, (roi_bbox[0], roi_bbox[1]), (roi_bbox[2], roi_bbox[3]), global_color, 2)
         cv2.putText(img_ori, identity, (roi_bbox[0], roi_bbox[1]), cv2.FONT_HERSHEY_SIMPLEX, 1, global_color, 2,
                     cv2.LINE_AA)
 
