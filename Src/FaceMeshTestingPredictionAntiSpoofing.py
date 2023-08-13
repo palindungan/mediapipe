@@ -51,14 +51,20 @@ while True:
                             abs(spoofing_bbox[1]): abs(spoofing_bbox[3]),
                             abs(spoofing_bbox[0]):abs(spoofing_bbox[2])
                             ]
-        cv2.imshow("spoof_img_cropped", spoof_img_cropped)
-        antiSpoofing.test(spoof_img_cropped,
-                          basicTool.get_base_url() + "/Resource/AntiSpoof/" + "resources/anti_spoof_models", 0)
+        # cv2.imshow("spoof_img_cropped", spoof_img_cropped)
+        model_dir = basicTool.get_base_url() + "/Resource/AntiSpoof/" + "resources/anti_spoof_models"
+        label, value = antiSpoofing.test(spoof_img_cropped,
+                                         model_dir,
+                                         0)
+        if label == 1:
+            identity = faceRecognition.prediction(roi_image)  # FaceRecognition
+            color = global_color
+        else:
+            identity = "FAKE"
+            color = (0, 0, 255)
 
-        identity = faceRecognition.prediction(roi_image)  # FaceRecognition
-
-        # cv2.rectangle(img_ori, (roi_bbox[0], roi_bbox[1]), (roi_bbox[2], roi_bbox[3]), global_color, 2)
-        cv2.putText(img_ori, identity, (roi_bbox[0], roi_bbox[1]), cv2.FONT_HERSHEY_SIMPLEX, 1, global_color, 2,
+        cv2.rectangle(img_ori, (roi_bbox[0], roi_bbox[1]), (roi_bbox[2], roi_bbox[3]), color, 2)
+        cv2.putText(img_ori, identity, (roi_bbox[0], roi_bbox[1]), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2,
                     cv2.LINE_AA)
 
     # show fps
