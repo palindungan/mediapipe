@@ -37,9 +37,9 @@ while True:
 
     # MAIN LOGIC
     for roi_idx, roi_image in enumerate(roi_images):
-        identity = faceRecognition.prediction(roi_image)  # FaceRecognition
-
         roi_bbox = roi_bboxes[roi_idx]
+
+        identity = faceRecognition.prediction(roi_image)  # FaceRecognition
 
         cv2.rectangle(img_ori, (roi_bbox[0], roi_bbox[1]), (roi_bbox[2], roi_bbox[3]), global_color, 2)
         cv2.putText(img_ori, identity, (roi_bbox[0], roi_bbox[1]), cv2.FONT_HERSHEY_SIMPLEX, 1, global_color, 2,
