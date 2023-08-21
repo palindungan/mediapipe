@@ -28,18 +28,15 @@ def prediction():
     if request.method == 'POST':
         data = []
 
+        # data_request = request.form
         file = request.files['file']
 
         # Convert the image data into a NumPy array
-        image_data = cv2.imread(basicTool.get_base_url() + "/Resource/Images/ktp.jpg")
+        image_data = np.frombuffer(file.read(), np.uint8)
 
         # Decode the image using OpenCV
-        img = image_data
+        img = cv2.imdecode(image_data, cv2.IMREAD_COLOR)
         img_ori = img.copy()
-
-        img_height, img_width, img_channel = img.shape
-
-        # data_request = request.form
 
         # MediapipeFaceMesh processing
         multi_face_landmarks = mediapipeFaceMesh.processing(img)
