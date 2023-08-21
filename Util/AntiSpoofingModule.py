@@ -62,7 +62,7 @@ class AntiSpoofing:
         label = np.argmax(prediction)
         value = prediction[0][label] / 2
 
-        if label == 1 and value > 0.99:
+        if label == 1 and value > 0.95:
             print("Image '{}' is Real. Score: {:.2f}.".format('image_name', value))
             result_text = "RealFace Score: {:.2f}".format(value)
             color = (255, 0, 0)
