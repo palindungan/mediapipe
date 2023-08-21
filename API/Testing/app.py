@@ -48,18 +48,7 @@ def prediction():
 
         # MAIN LOGIC
         for roi_idx, roi_image in enumerate(roi_images):
-            roi_bbox = roi_bboxes[roi_idx]
-
-            spoof_x_diff = abs(int(roi_bbox[2] - roi_bbox[0]))
-            spoof_x_diff = int(spoof_x_diff / 2)
-            spoofing_bbox = [
-                int(roi_bbox[0] - spoof_x_diff), 0,
-                int(roi_bbox[2] + spoof_x_diff), img_height
-            ]
-            spoof_img_cropped = img_ori[
-                                abs(spoofing_bbox[1]): abs(spoofing_bbox[3]),
-                                abs(spoofing_bbox[0]):abs(spoofing_bbox[2])
-                                ]
+            spoof_img_cropped = img_ori
             # cv2.imshow("spoof_img_cropped", spoof_img_cropped)
             model_dir = basicTool.get_base_url() + "/Resource/AntiSpoof/" + "resources/anti_spoof_models"
             label, value = antiSpoofing.test(spoof_img_cropped,
