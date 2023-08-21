@@ -45,12 +45,8 @@ def prediction():
 
         # MAIN LOGIC
         for roi_idx, roi_image in enumerate(roi_images):
-            spoof_img_cropped = img_ori
-            # cv2.imshow("spoof_img_cropped", spoof_img_cropped)
             model_dir = basicTool.get_base_url() + "/Resource/AntiSpoof/" + "resources/anti_spoof_models"
-            label, value = antiSpoofing.test(spoof_img_cropped,
-                                             model_dir,
-                                             0)
+            label, value = antiSpoofing.test(img_ori, model_dir, 0)
             if label == 1 and value >= 0.95:
                 identity = faceRecognition.prediction(roi_image)  # FaceRecognition
             else:
