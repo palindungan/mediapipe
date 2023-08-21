@@ -56,7 +56,7 @@ while True:
         label, value = antiSpoofing.test(spoof_img_cropped,
                                          model_dir,
                                          0)
-        if label == 1:
+        if label == 1 and value > 0.9:
             identity = faceRecognition.prediction(roi_image)  # FaceRecognition
             color = global_color
         else:
