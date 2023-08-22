@@ -58,33 +58,22 @@ def antiSpoofing():
 
         # data_request = request.form
         file = request.files['file']
-
-        # Convert the image data into a NumPy array
         image_data = np.frombuffer(file.read(), np.uint8)
-
-        # Decode the image using OpenCV
         img = cv2.imdecode(image_data, cv2.IMREAD_COLOR)
         img_ori = img.copy()
 
-        # MediapipeFaceMesh processing
-        multi_face_landmarks = mediapipeFaceMesh.processing(img)
-        get_roi_images = mediapipeFaceMesh.get_roi_images(img, multi_face_landmarks)
-        roi_images, roi_bboxes = get_roi_images
+        model_dir = basicTool.get_base_url() + "/Resource/AntiSpoof/" + "resources/anti_spoof_models"
+        label, value = antiSpoofing.test(img_ori, model_dir, 0)
+        if label == 1 and value >= 0.95:
+            identity = "Real"
+        else:
+            identity = "FAKE"
 
-        # MAIN LOGIC
-        for roi_idx, roi_image in enumerate(roi_images):
-            model_dir = basicTool.get_base_url() + "/Resource/AntiSpoof/" + "resources/anti_spoof_models"
-            label, value = antiSpoofing.test(img_ori, model_dir, 0)
-            if label == 1 and value >= 0.95:
-                identity = faceRecognition.prediction(roi_image)  # FaceRecognition
-            else:
-                identity = "FAKE"
-
-            data.append({
-                "identity": identity,
-                "score": value * 100,
-                "threshold": 95,
-            })
+        data.append({
+            "identity": identity,
+            "score": value * 100,
+            "threshold": 95,
+        })
 
         return jsonify({'success': True, 'message': 'success', 'data': data}), 201
 
