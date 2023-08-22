@@ -3,19 +3,11 @@ import cv2
 
 from flask import *
 from Util import BasicToolModule
-from Util import ImageProcessingModule
 from Util import MediapipeFaceMeshModule
 from Util import FaceRecognitionModule
 from Util import AntiSpoofingModule
 
 app = Flask(__name__)
-
-# utility class
-basicTool = BasicToolModule.BasicTool()
-imageProcessing = ImageProcessingModule.ImageProcessing()
-mediapipeFaceMesh = MediapipeFaceMeshModule.MediapipeFaceMesh()
-faceRecognition = FaceRecognitionModule.FaceRecognition()
-antiSpoofing = AntiSpoofingModule.AntiSpoofing()
 
 
 @app.route('/')
@@ -26,6 +18,10 @@ def main():
 @app.route('/prediction', methods=['POST'])
 def prediction():
     if request.method == 'POST':
+        # utility class
+        mediapipeFaceMesh = MediapipeFaceMeshModule.MediapipeFaceMesh()
+        faceRecognition = FaceRecognitionModule.FaceRecognition()
+
         data = []
 
         # data_request = request.form
@@ -44,7 +40,7 @@ def prediction():
 
             data.append({
                 "identity": identity,
-                "score": dist,
+                "score": int(dist),
                 "threshold": 6,
             })
 
@@ -54,6 +50,10 @@ def prediction():
 @app.route('/anti-spoofing', methods=['POST'])
 def antiSpoofing():
     if request.method == 'POST':
+        # utility class
+        basicTool = BasicToolModule.BasicTool()
+        antiSpoof = AntiSpoofingModule.AntiSpoofing()
+
         data = []
 
         # data_request = request.form
@@ -63,7 +63,7 @@ def antiSpoofing():
         img_ori = img.copy()
 
         model_dir = basicTool.get_base_url() + "/Resource/AntiSpoof/" + "resources/anti_spoof_models"
-        label, value = antiSpoofing.test(img_ori, model_dir, 0)
+        label, value = antiSpoof.test(img_ori, model_dir, 0)
         if label == 1 and value >= 0.95:
             identity = "Real"
         else:
