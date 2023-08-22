@@ -34,3 +34,22 @@ class FaceRecognition:
                 identity = key
 
         return identity
+
+    def predictionV2(self, roi_image):
+        face = cv2.cvtColor(roi_image, cv2.COLOR_BGR2RGB)
+        face = cv2.resize(face, (160, 160))
+
+        face = np.expand_dims(face, axis=0)
+        signature = self.face_net.embeddings(face)
+
+        dist = 100
+        min_dist = 6
+        identity = 'unknown'
+        for key, value in self.model_database.items():
+            dist = np.linalg.norm(value - signature)
+            print(dist)
+            if dist < min_dist:
+                min_dist = dist
+                identity = key
+
+        return identity, dist
